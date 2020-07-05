@@ -1,0 +1,37 @@
+html {
+    background: #f2f2f2;
+}
+.scroll-container,
+.scroll-area {
+    height: 627px;;
+    font-size: 60px;
+    
+}
+
+.scroll-container {
+    overflow: auto;
+    scroll-snap-type: y mandatory;
+}
+
+.scroll-area {
+    scroll-snap-align: start;
+}
+
+.scroll-container,
+.scroll-area {
+    margin: 0 auto;
+}
+
+.scroll-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.scroll-area{
+    background: #000000;
+    margin-bottom: 1%;
+}
+
+
