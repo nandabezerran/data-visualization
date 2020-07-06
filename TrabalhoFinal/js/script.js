@@ -1,5 +1,8 @@
+
+//AnimationOnScroll initialization
 AOS.init();
-//NavBar
+
+//SideNavBar
 $(document).ready(function(){
     $('.sbOption').click(function(event){
         //remove all pre-existing active classes
@@ -16,20 +19,9 @@ $(document).ready(function(){
         event.preventDefault();
     });
 });
-//Beeswarm
-let myColor = d3.scaleQuantize()
-                .domain([0, 100])
-                .range(d3.schemeReds[7]);
 
-let margin = ({top: 20, right: 20, bottom: 30, left: 20})
-let padding = 1.5;
-let radius = 3.6;
-let height = 627;
-let width = 800;
-const svg = d3.select("#beeswarm").append("svg")
-                .attr("width", width)
-                .attr("height", height);
 
+//Datasets
 let promises = [
     d3.csv("https://gist.githubusercontent.com/nandabezerran/ead62cdad2f5a94e50f6f9b3c5b33ce2/raw/d00336972ffce34fb8292bc9b92ffb96eb8c65a4/MassShootings.csv").then(function(data) {
     data.forEach(function(d) {
@@ -41,7 +33,22 @@ let promises = [
 
 Promise.all(promises).then(ready);
 
-function ready([data]){
+//Beeswarm
+let myColor = d3.scaleQuantize()
+                .domain([0, 100])
+                .range(d3.schemeReds[7]);
+
+let margin = ({top: 20, right: 20, bottom: 30, left: 20})
+let padding = 1.5;
+let radius = 3.6;
+let height = 627;
+let width = 800;
+const svgBeeswarm = d3.select("#beeswarm").append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+
+function beeswarm(data){
     let years = d3.extent(data, d => d.Year);
     let x = d3.scaleTime()
               .domain([+years[0]- 1, +years[1] +1])
@@ -93,10 +100,10 @@ function ready([data]){
         return circles;
     }
 
-    svg.append("g")
+    svgBeeswarm.append("g")
        .call(xAxis);
   
-    svg.append("g")
+    svgBeeswarm.append("g")
         .selectAll("circle")
         .data(dodge(data, radius * 2 + padding))
         .join("circle")
@@ -109,4 +116,86 @@ function ready([data]){
         })
         .append("title")
         .text(d => "Title: " + d.data.Title + " | Date: " + d.data.Date +" | Victims: " + d.data['Total victims']);
+}
+
+//Stacked Bar
+let widthSB = 600
+let heightSB = 400
+let marginSB = ({
+    top: 2,
+    right: 2,
+    bottom: 30,
+    left: 30
+  })
+let colorSB = d3.scaleOrdinal()
+                .domain(["Fatalities", "Injured"])
+                .range(["#8c0d0d"," #ee4343"]);
+const svgSB = d3.select("#stackedBar").append("svg")
+                .attr('width', widthSB )
+                .attr('height', heightSB)
+function stackedBar(data){
+    let nestedaux = d3.nest()
+                      .key(function(d){return d.Year;})
+                      .rollup(function(d) {
+                            return{
+                                Fatalities: d3.sum(d, function(e) {return e.Fatalities;}),
+                                Injured: d3.sum(d, function(e) {return e.Injured})
+                            };
+                        })
+                      .entries(data);
+    let nested = nestedaux.slice().sort((a, b) => d3.ascending(a.key, b.key));
+    let xScale = d3.scaleBand(
+                        nested.map(d => d.key),
+                        [ marginSB.left, widthSB - marginSB.right ]
+                    ).padding(0.1);
+    let yScale = d3.scaleLinear(
+                        [ 0, d3.max(nested, d => d.value.Fatalities + d.value.Injured) ],
+                        [ heightSB - marginSB.bottom, marginSB.top ]
+                    );
+    let xAxis = d3.axisBottom(xScale)
+                  .tickSizeOuter(0)
+                  .tickValues([1966, 1984, 1992, 2001, 2009, 2017]);
+    let yAxis = d3.axisLeft(yScale);
+    let series = d3.stack()
+                    .keys(["Fatalities","Injured"])
+                    .value((d, key) => {
+                    console.log(key);
+                    return d.value[key];
+                    })(nested);
+
+    const chartData = series;
+  
+    const groups = svgSB.append('g')
+        .selectAll('g')
+        .data( chartData )
+        .join('g')
+        .style('fill', (d,i) => colorSB(d.key));
+        
+    groups.selectAll('rect')
+        .data(d => d)
+        .join('rect')
+        .attr('x', d => xScale(d.data.key))
+        .attr('y', d => yScale(d[1]))
+        .attr('height', d => yScale(d[0]) - yScale(d[1]))
+        .attr('width', xScale.bandwidth)
+        .append("title")
+        .text((d,i) =>{let aux = 'Injured'; if (d[0] == 0) aux = 'Fatalities'; return ('Year: ' + d.data.key + '\n'     + aux + ': ' + d[1])});
+    
+    svgSB.append('g')
+        .attr('transform', `translate(0,${ heightSB - marginSB.bottom })`)
+        .call(xAxis) 
+        .selectAll("text")	
+        .style("text-anchor", "end")
+        .attr("dx", "1em");
+    
+    svgSB.append('g')
+        .attr('transform', `translate(${ marginSB.left },0)`)
+        .call(yAxis)
+        .select('.domain').remove();
+}
+
+//Function to show the graphs
+function ready([data]){
+    beeswarm(data);
+    stackedBar(data);
 }
