@@ -95,10 +95,18 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             let idGrouping = idDimension.group();
             
             let races = ["Asian", "White", "Black", "Others", "Unknown"]; 
-            
-            let data = getFilteredData();       
-            
-            let uniqueValues = data.map(d => d.value).filter(onlyUnique)
+            let nested_data = d3.nest()
+            .key(function(e) {if(e.Race == 'Asian American' || e.Race == 'Asian'){return 'Asian'}
+                             else if(e.Race == 'Black' || e.Race == 'Black American or African American'){return 'Black'}
+                             else if(e.Race == 'White' || e.Race == 'White American or European American'){return 'White'}
+                             else if(e.Race == 'Unknown'){return 'Unknown'}
+                             else{return 'Others'}
+                             })
+            .rollup(function(v) {return v.length})  
+            .entries(dataset); 
+           
+            nested_data = nested_data.filter(function (n){return n.value > 0;});
+            let data = nested_data.sort(function(a, b){return a.value - b.value})    
             
             let pie = d3.pie()
                         .padAngle(0.005)
@@ -112,11 +120,7 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             let biggerArc = d3.arc().outerRadius(radius - 110).innerRadius(radius - 20);
             
             let normalArc = d3.arc().outerRadius(radius - 30).innerRadius(radius - 100);
-            
-            let colorPie = d3.scaleOrdinal()
-                             .domain(uniqueValues)
-                             .range(d3.schemeReds[5])
-            
+
             let targetXScale = d3.scaleLinear()
                                  .domain([0, 25])
                                  .range([0, width - 100])
@@ -133,14 +137,13 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
               .attr('id', 'buttonReset')
               .attr('class', 'hidden')
             
-            function resetFiltersState() {
-                console.log('entrou')
-                data = filterRaceData('all');
-                
+            function resetFilters(){
+                chart.update(filterRaceData('all'));
                 stateDim.filterFunction(function(d) {
                   return d;
-                })
-                 
+                });
+                dc.filterAll(); 
+                map.setView([39.3937622,-100.6949527], 4)
                 dc.redrawAll();
                 hideButton()
             }
@@ -179,16 +182,19 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             }
             function updateFilters(e){ 
                 let state = e.target.feature.properties.NAME;
-                data = filterRaceData(state);
-              
-                map.fitBounds(e.target.getBounds());
+
+                
+                chart.update(filterRaceData(state));
+                
                 stateDim.filterFunction(function(d) {
-                  return d == state;
+                    return d == state;
                 });
+                map.fitBounds(e.target.getBounds());
                 dc.redrawAll();
-                showButtonState();
-              
-              }                    
+                showButton();
+
+            }              
+
             function getKeyByValue(object, value) {
                 return Object.keys(object).find(key => object[key] === value);
             }
@@ -222,6 +228,10 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                 pieData.sort((a,b) => a.value - b.value); 
                 return pieData;
             }
+            function updateFiltersDc(){
+                chart.update(getFilteredData());
+                showButton();
+             }
             function filterRaceData(s){
                 let nested = d3.nest()
                  .key(function(e) {if(e.Race == 'Asian American' || e.Race == 'Asian'){return 'Asian'}
@@ -321,64 +331,68 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             }).addTo(map)
             //Configuring graphs
             console.log(data);
-            chart1.width(400)
-                  .height(500)
-                  .x(causeXscale)
-                  .dimension(causeDim)
-                  .group(causeGroup)
-                  .colors("#ef3b2c") 
-                  .valueAccessor(function(p) { return format(p.value / 316 * 100)})
-                  .title(d => format(d.value / 316 * 100) + '%')
-                  .xAxis().ticks(9)
-            
+            chart1.width(1200)
+                .height(500)
+                .x(causeXscale)
+                .dimension(causeDim)
+                .group(causeGroup)
+                .colors("#ef3b2c") 
+                .valueAccessor(function(p) { return format(p.value / 316 * 100)})
+                .title(d => format(d.value / 316 * 100) + '%')
+                .xAxis().ticks(9)
+            //MUDANCA
             chart1.on("filtered", function() {
-                data = getFilteredData();
-                console.log(data);
-                showButtonDc();
+                updateFiltersDc();
             })
-            
-            chart2.width(400)
-                  .height(500)
-                  .x(targetXScale)
-                  .dimension(targetDim)
-                  .group(targetGroup)
-                  .colors("#ef3b2c") 
-                  .valueAccessor(function(p) { return format(p.value / 316 * 100)})
-                  .title(d => format(d.value / 316 * 100) + '%')
-                  .xAxis().ticks(15)
-            
+
+            chart2.width(1200)
+                .height(500)
+                .x(targetXScale)
+                .dimension(targetDim)
+                .group(targetGroup)
+                .colors("#ef3b2c") 
+                .valueAccessor(function(p) { return format(p.value / 316 * 100)})
+                .title(d => format(d.value / 316 * 100) + '%')
+                .xAxis().ticks(15)
+
             chart2.on("filtered", function() {
-                data = getFilteredData();
-                showButtonDc();
+                updateFiltersDc();
+
             })
-            
-            
+
             let arcs = pie(data);
+    
             var total = data.reduce((accum,item) => accum + item.value, 0)
             
             var lastSelected = "";
             var firstSelected = "";
-
-            var centralText = svg.append("text")
-            .attr("font-family", "Arial")
-            .attr("font-size", "28px")
-            .attr("text-anchor", "middle")
-            .text(d3.format(".1%")(data[0].value / total));
             
+            var uniqueValues = data.map(d => d.value).filter(onlyUnique)
+            
+            var colorPie = d3.scaleOrdinal()
+                  .domain(uniqueValues)
+                  .range(d3.schemeReds[5])
+            
+            var centralText = svg.append("text")
+                  .attr("font-family", "Arial")
+                  .attr("font-size", "28px")
+                  .attr("text-anchor", "middle")
+                  .text(d3.format(".1%")(data[0].value / total));
+                  
             var pathPie = svg.selectAll("path")
-                .data(arcs)
-                .join("path")
-                .attr("fill", d => colorPie(d.value))
-                .attr("d", normalArc)
-                .attr("stroke", "black")
-                .style("stroke-width", "2px")
-                .attr('d', function(d, index) {
-                    if (index === 0) {
-                        firstSelected = this;
-                        return biggerArc(d);
-                    } else {
-                        return normalArc(d);
-                    }
+              .data(arcs)
+              .join("path")
+              .attr("fill", d => colorPie(d.value))
+              .attr("d", normalArc)
+              .attr("stroke", "black")
+              .style("stroke-width", "2px")
+              .attr('d', function(d, index) {
+                  if (index === 0) {
+                      firstSelected = this;
+                      return biggerArc(d);
+                  } else {
+                      return normalArc(d);
+                  }
                 }).on("click", function(d) {
                     centralText.text(d3.format(".1%")(d.value / total));
                     if (firstSelected) {
@@ -391,15 +405,74 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                     d3.select(this).attr("d", biggerArc)
                     lastSelected = this;
                 })
-                .append("title")
-                .text(d => `${d.data.key}: ${d.value.toLocaleString()}`)
+              .append("title")
+              .text(d => `${d.data.key}: ${d.value.toLocaleString()}`)
+          
+           let gg = svg.append("g")
+                .attr("font-family", "sans-serif")
+                .attr("font-size", 12)
+                .attr("text-anchor", "middle")
+                .selectAll("text")
+                .data(arcs)
+                .join("text")
+                .attr("transform", d => `translate(${normalArc.centroid(d)})`)
+                .call(text => text.append("tspan")
+                .attr("y", "-0.4em")
+                .attr("font-weight", "bold")
+                .text(d => d.data.key))
+                .call(text => text.filter(d => (d.endAngle - d.startAngle)).append("tspan")
+                .attr("x", 0)
+                .attr("y", "0.7em")
+                .attr("fill-opacity", 0.7)
+                .text(d => d.value.toLocaleString()));
+           
+            chart = Object.assign(svg.node(), {
+              update(newdata) {
+                total = newdata.reduce((accum,item) => accum + item.value, 0)
+                
+                uniqueValues = newdata.map(d => d.value).filter(onlyUnique)
             
-                svg.append("g")
+                colorPie = d3.scaleOrdinal()
+                  .domain(uniqueValues)
+                  .range(d3.schemeReds[5])
+                
+                gg.remove();
+                pathPie.remove();
+          
+                pathPie = svg.selectAll("path").data(pie(newdata))
+                                     .join("path")
+                                     .attr("fill", d => colorPie(d.value))
+                                      .attr("d", normalArc)
+                                      .attr("stroke", "black")
+                                      .style("stroke-width", "2px")
+                                      .attr('d', function(d, index) {
+                                          if (index === 0) {
+                                              firstSelected = this;
+                                              return biggerArc(d);
+                                          } else {
+                                              return normalArc(d);
+                                          }
+                                        }).on("click", function(d) {
+                                            centralText.text(d3.format(".1%")(d.value / total));
+                                            if (firstSelected) {
+                                                d3.select(firstSelected).attr("d", normalArc)
+                                                firstSelected = false;
+                                            }
+                                            if (lastSelected) {
+                                                d3.select(lastSelected).attr("d", normalArc)
+                                            }
+                                            d3.select(this).attr("d", biggerArc)
+                                            lastSelected = this;
+                                        })
+                                      .append("title")
+                                      .text(d => `${d.data.key}: ${d.value.toLocaleString()}`)
+                      
+                gg = svg.append("g")
                     .attr("font-family", "sans-serif")
                     .attr("font-size", 12)
                     .attr("text-anchor", "middle")
                     .selectAll("text")
-                    .data(arcs)
+                    .data(pie(newdata))
                     .join("text")
                     .attr("transform", d => `translate(${normalArc.centroid(d)})`)
                     .call(text => text.append("tspan")
@@ -410,8 +483,14 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                     .attr("x", 0)
                     .attr("y", "0.7em")
                     .attr("fill-opacity", 0.7)
-                    .text(d => d.value.toLocaleString()));
+                    .text(d => d.value.toLocaleString()));                     
+          
+               
+                svg.select('text').text(d3.format(".1%")(newdata[0].value / total));
+                
+              }   
+            });
 
-                    dc.renderAll();
+        dc.renderAll();
 });
 
