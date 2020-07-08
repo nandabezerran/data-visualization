@@ -194,8 +194,158 @@ function stackedBar(data){
         .select('.domain').remove();
 }
 
+//Scatterplot
+let marginSp = ({top: 40, right: 50, bottom: 40, left: 60});
+let heightSp = 600 - marginSp.top - marginSp.bottom;
+let widthSp = 800;
+let myColorSp = d3.scaleQuantize()
+                  .domain([0, 150])
+                  .range(d3.schemeReds[5]);
+
+const svgSp = d3.select("#scatterplot").append("svg")
+                .attr('width', widthSp )
+                .attr('height', heightSp)
+
+d3.select('#tooltip').remove()
+let tooltip = d3.select('body')
+    .append('div')
+    .attr('id', 'tooltip')
+    .attr('class', 'hidden')
+    .append('p')
+    .html("<b><span id='state'></span></b><br> Number of ocurrence: <span id='occurrence'></span><br> Number of victims: <span id='victims'></span><br> Number of fatalities: <span id='fatalities'></span>");
+function showTooltip(d, x, y) {
+    const offset = 10;
+    const t = d3.select("#tooltip");
+    t.select("#state").text(d.key);
+    t.select("#occurrence").text(d.value.occurrences);
+    t.select("#victims").text(d.value.victims);
+    t.select("#fatalities").text(d.value.fatalities);
+    t.classed("hidden", false);
+    const rect = t.node().getBoundingClientRect();
+    const w = rect.widthSp;
+    const h = rect.heightSp;
+    if (x + offset + w > widthSp) {
+        x = x - w;
+    }
+    t.style("left", x + offset + "px").style("top", y - h + "px");
+}  
+function hideTooltip(){
+    d3.select("#tooltip")
+        .classed("hidden", true)
+}     
+function scatterplot(data){
+    let nested = d3.nest()
+                   .key(function(d) {return d.State;})
+                   .rollup(function(d) {
+                        return {
+                            fatalities: d3.sum(d, function(e) { return e.Fatalities; }),
+                            occurrences: d3.sum(d, function(e) { return 1; }),
+                            victims: d3.sum(d, function(e) {return e['Total victims'];})
+                        };
+                    })
+                   .entries(data);
+
+    let z = d3.scaleLinear()
+            .domain([0, d3.max(nested, d => d.value.fatalities)])
+            .range([5, 40]);
+    let x = d3.scaleLinear()
+            .domain([0, d3.max(nested, d => d.value.victims)])
+            .range([ marginSp.left, widthSp -marginSp.right]);
+            let grid = g => g
+            .attr("stroke", "currentColor")
+            .attr("stroke-opacity", 0.1)
+            .call(g => g.append("g")
+            .selectAll("line")
+            .data(x.ticks())
+            .join("line")
+                .attr("x1", d => 0.5 + x(d))
+                .attr("x2", d => 0.5 + x(d))
+                .attr("y1", marginSp.top)
+                .attr("y2", heightSp - marginSp.bottom))
+            .call(g => g.append("g")
+            .selectAll("line")
+            .data(y.ticks())
+            .join("line")
+                .attr("y1", d => 0.5 + y(d))
+                .attr("y2", d => 0.5 + y(d))
+                .attr("x1", marginSp.left)
+                .attr("x2", widthSp - marginSp.right));
+    let xAxis = g => g
+                .attr("transform", `translate(0,${heightSp - marginSp.bottom})`)
+                .call(d3.axisBottom(x))
+                .call(g => g.append("text")
+                    .attr("x", widthSp /2)
+                    .attr("y", marginSp.bottom - 1)
+                    .attr("fill", "currentColor")
+                    .attr("font-size", 16)
+                    .text(" Total number of victims (deaths and injuries)"))
+    let y = d3.scaleLinear()
+                .domain([0, d3.max(nested, d => d.value.occurrences)])
+                .range([ heightSp - marginSp.bottom, marginSp.top]);        
+    let yAxis = g => g
+            .attr("transform", `translate(${marginSp.left},0)`)
+            .call(d3.axisLeft(y))
+            .call(g => g.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - marginSp.left + 25)
+                .attr("x",0 - (heightSp/2 +90))
+                .attr("fill", "currentColor")
+                .attr("text-anchor", "start")
+                .attr("font-size", 16)
+                .text("Number of Occurrences"))
+    svgSp.append("g")
+        .call(xAxis);
+
+    svgSp.append("g")
+        .call(yAxis);
+
+    svgSp.append("g")
+        .call(grid);
+
+    svgSp.append("g")
+        .attr("stroke", "white")
+        .selectAll("circle")
+        .data(nested)
+        .join("circle")
+        .attr("class", "bubbles")
+        .sort((a, b) => d3.descending(a.value.fatalities, b.value.fatalities))
+        .attr("cx", d => x(d.value.victims))
+        .attr("cy", d => y(d.value.occurrences))
+        .attr("r", d => z(d.value.fatalities))
+        .attr("fill", d => myColorSp(d.value.victims))
+        .attr("fill-opacity", 0.6)      
+        .on("mouseover", function(d){
+            d3.select(this) // seleciona o elemento atual
+            .style("cursor", "pointer") //muda o mouse para mãozinha
+            .attr("stroke-width", 3)
+            .attr("stroke","#FFF5B1");
+            const rect = this.getBoundingClientRect();
+            showTooltip(d, rect.x, rect.y);
+        })
+        .on("mouseout", function(d){
+            d3.select(this)
+            .style("cursor", "default")
+            .attr("stroke-width", 1)
+            .attr("stroke","white"); //volta ao valor padrão
+            hideTooltip();
+        });
+        
+    svgSp.append("g")
+        .selectAll('text')
+        .data(nested.filter(function (n){return n.value.victims > 90;}))
+        .enter()
+        .append('text')
+        .attr('x', d => x(d.value.victims -15))
+        .attr('y', d => y(d.value.occurrences))
+        .attr('font-family', 'sans-serif')
+        .attr("font-size", 12)
+        .attr('fill', 'black')
+        .text(d => d.key);
+}
+        
 //Function to show the graphs
 function ready([data]){
     beeswarm(data);
     stackedBar(data);
+    scatterplot(data);
 }

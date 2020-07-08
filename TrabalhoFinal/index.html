@@ -36,6 +36,7 @@
         <a class="sbOption" href="#section4">Shooter's Profile</a>
         <a class="sbOption" href="#section5">Beeswarm</a>
         <a class="sbOption" href="#section6">Stacked Bar</a>
+        <a class="sbOption" href="#section7">Scatterplot</a>
     </div>
     <div class="scroll-container">
         <div class="scroll-area" id="section1"></div>
@@ -57,13 +58,19 @@
                 </div>
             </div>
         </div>
-        <div class="scroll-area" id="section4"><div id="pieChart" data-aos="fade-left"></div></div>
+        <div class="scroll-area" id="section4">
+            <div id="pieChart" data-aos="fade-left"> </div>
+            <div id="genderAge" data-aos="fade-right"></div>
+        </div>
         <div class="scroll-area" id="section5"><div id="beeswarm" data-aos="fade-right"></div>  </div>  
         <div class="scroll-area" id="section6"><div id="stackedBar" data-aos="fade-left"></div>  </div>      
+        <div class="scroll-area" id="section7"><div id="scatterplot" data-aos="fade-right"></div>  </div>  
     </div>
     
     </script>
      <!-- Bootstrap javascript files -->
+     <script src="https://d3js.org/d3-array.v2.min.js"></script>
+     <script src="js/genderAge.js"></script>
     <script type="text/javascript" src="js/graphsWithFilter.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
