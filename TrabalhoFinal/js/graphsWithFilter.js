@@ -273,10 +273,7 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                             click: updateFilters
                         });
             }
-            geojson = L.geoJson(states, {
-                        style: style,
-                        onEachFeature: onEachFeature
-                }).addTo(map)
+
             //Info Control
             let info = L.control()
             info.onAdd = function (map) {
@@ -318,7 +315,10 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             }
             legend.addTo(map)
             
-            L.geoJson(states, {style: style}).addTo(map);
+            geojson = L.geoJson(states, {
+                style: style,
+                onEachFeature: onEachFeature
+            }).addTo(map)
             //Configuring graphs
             console.log(data);
             chart1.width(400)
@@ -333,6 +333,7 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             
             chart1.on("filtered", function() {
                 data = getFilteredData();
+                console.log(data);
                 showButtonDc();
             })
             
@@ -348,11 +349,10 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             
             chart2.on("filtered", function() {
                 data = getFilteredData();
-                
                 showButtonDc();
             })
             
-
+            
             let arcs = pie(data);
             var total = data.reduce((accum,item) => accum + item.value, 0)
             
