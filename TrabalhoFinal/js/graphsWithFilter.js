@@ -168,14 +168,14 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                 t.classed("hidden", true);
             }
             function showButton() {
+                console.log('entrou dc');
                 const t = d3.select("#buttonReset");
+                console.log(t)
                 t.classed("hidden", false);
               }
-            function showButtonState() {
-                const t = d3.select("#buttonReset");
-                t.classed("hidden", false);
-                document.getElementById("buttonReset").onclick = resetFiltersState;
-            }
+
+            document.getElementById("buttonReset").onclick = resetFilters;
+            
             function onlyUnique(value, index, self) { 
                 return self.indexOf(value) === index;
             }
