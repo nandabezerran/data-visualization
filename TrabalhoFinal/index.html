@@ -26,25 +26,45 @@
     <script src="https://unpkg.com/dc@4.0.5/dist/dc.min.js"></script>
     <script type="module" src="https://rawgit.com/ckrack/scrollsnap-polyfill/develop/dist/scrollsnap-polyfill.bundled.js"></script>
     <script type="module" src="js/script.js"></script>
+    
 </head>
 <body>
     <div class="sidenav">
         <a class="sbOption active" href="#section1">Statistics</a>
         <a class="sbOption" href="#section2">Map</a>
-        <a class="sbOption" href="#section3">Shooter's Profile</a>
-        <a class="sbOption" href="#section4">Beeswarm</a>
-        <a class="sbOption" href="#section5">Stacked Bar</a>
+        <a class="sbOption" href="#section3">Motivations and Targets</a>
+        <a class="sbOption" href="#section4">Shooter's Profile</a>
+        <a class="sbOption" href="#section5">Beeswarm</a>
+        <a class="sbOption" href="#section6">Stacked Bar</a>
     </div>
     <div class="scroll-container">
-        <div class="scroll-area" id="section1">1</div>
-        <div class="scroll-area" id="section2">2</div>
-        <div class="scroll-area" id="section3">3</div>
-        <div class="scroll-area" id="section4"><div id="beeswarm" data-aos="fade-right"></div>  </div>  
-        <div class="scroll-area" id="section5"><div id="stackedBar" data-aos="fade-left"></div>  </div>      
+        <div class="scroll-area" id="section1"></div>
+
+        <div class="scroll-area" id="section2">  
+            <div id="map" class="row">
+                <h5>Mapa</h5>
+            </div>  
+        </div>
+        <div class="scroll-area" id="section3"> 
+            <div class="col-6">
+                <div id="chart1">
+                    <h5>Motivations</h5>
+                </div>
+            </div>
+            <div class="col-4">
+                <div id="chart2">
+                    <h5>Targets</h5>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-area" id="section4"><div id="pieChart" data-aos="fade-left"></div></div>
+        <div class="scroll-area" id="section5"><div id="beeswarm" data-aos="fade-right"></div>  </div>  
+        <div class="scroll-area" id="section6"><div id="stackedBar" data-aos="fade-left"></div>  </div>      
     </div>
     
     </script>
      <!-- Bootstrap javascript files -->
+    <script type="text/javascript" src="js/graphsWithFilter.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
