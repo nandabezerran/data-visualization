@@ -167,11 +167,10 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                 const t = d3.select("#buttonReset");
                 t.classed("hidden", true);
             }
-            function showButtonDc() {
+            function showButton() {
                 const t = d3.select("#buttonReset");
                 t.classed("hidden", false);
-                document.getElementById("buttonReset").onclick = resetFiltersDc;
-            }
+              }
             function showButtonState() {
                 const t = d3.select("#buttonReset");
                 t.classed("hidden", false);
