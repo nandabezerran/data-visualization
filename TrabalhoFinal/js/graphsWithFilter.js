@@ -132,11 +132,13 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             let format = d3.format(".2f");
                         d3.select('#buttonReset').remove()
 
-            let buttonReset = d3.select('body')
+            let buttonReset = d3.select('#buttonSpace')
               .append('div')
               .attr('id', 'buttonReset')
               .attr('class', 'hidden')
-            
+              
+              buttonReset.append('span').attr('class','material-icons').node().innerHTML = 'replay';    
+                      
             function resetFilters(){
                 chart.update(filterRaceData('all'));
                 stateDim.filterFunction(function(d) {
