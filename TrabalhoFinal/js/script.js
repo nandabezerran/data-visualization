@@ -206,33 +206,6 @@ const svgSp = d3.select("#scatterplot").append("svg")
                 .attr('width', widthSp )
                 .attr('height', heightSp)
 
-d3.select('#tooltip').remove()
-let tooltip = d3.select('body')
-    .append('div')
-    .attr('id', 'tooltip')
-    .attr('class', 'hidden')
-    .append('p')
-    .html("<b><span id='state'></span></b><br> Number of ocurrence: <span id='occurrence'></span><br> Number of victims: <span id='victims'></span><br> Number of fatalities: <span id='fatalities'></span>");
-function showTooltip(d, x, y) {
-    const offset = 10;
-    const t = d3.select("#tooltip");
-    t.select("#state").text(d.key);
-    t.select("#occurrence").text(d.value.occurrences);
-    t.select("#victims").text(d.value.victims);
-    t.select("#fatalities").text(d.value.fatalities);
-    t.classed("hidden", false);
-    const rect = t.node().getBoundingClientRect();
-    const w = rect.widthSp;
-    const h = rect.heightSp;
-    if (x + offset + w > widthSp) {
-        x = x - w;
-    }
-    t.style("left", x + offset + "px").style("top", y - h + "px");
-}  
-function hideTooltip(){
-    d3.select("#tooltip")
-        .classed("hidden", true)
-}     
 function scatterplot(data){
     let nested = d3.nest()
                    .key(function(d) {return d.State;})
@@ -313,22 +286,12 @@ function scatterplot(data){
         .attr("cy", d => y(d.value.occurrences))
         .attr("r", d => z(d.value.fatalities))
         .attr("fill", d => myColorSp(d.value.victims))
-        .attr("fill-opacity", 0.6)      
-        .on("mouseover", function(d){
-            d3.select(this) // seleciona o elemento atual
-            .style("cursor", "pointer") //muda o mouse para mãozinha
-            .attr("stroke-width", 3)
-            .attr("stroke","#FFF5B1");
-            const rect = this.getBoundingClientRect();
-            showTooltip(d, rect.x, rect.y);
-        })
-        .on("mouseout", function(d){
-            d3.select(this)
-            .style("cursor", "default")
-            .attr("stroke-width", 1)
-            .attr("stroke","white"); //volta ao valor padrão
-            hideTooltip();
-        });
+        .attr("fill-opacity", 0.6)  
+        .append("title")    
+        .text(d => 'State: '+ d.key + '\n' +
+                   "Occurrences: " + d.value.occurrences + '\n' + 
+                   "Victims: " + d.value.victims + '\n'+
+                   "Fatalities: " + d.value.fatalities);
         
     svgSp.append("g")
         .selectAll('text')
