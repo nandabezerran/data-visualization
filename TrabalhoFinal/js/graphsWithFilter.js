@@ -6,8 +6,8 @@ let states;
 let width = 400;
 let dataMap;
 let dataset;
-let widthPc = 800;
-let heightPc = 627;
+let widthPc = 500;
+let heightPc = 456;
 
 function dataMapCallback(data){
     let rateMap = d3.map()
@@ -332,7 +332,7 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             }).addTo(map)
             //Configuring graphs
             console.log(data);
-            chart1.width(1200)
+            chart1.width(400)
                 .height(500)
                 .x(causeXscale)
                 .dimension(causeDim)
@@ -346,7 +346,7 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                 updateFiltersDc();
             })
 
-            chart2.width(1200)
+            chart2.width(400)
                 .height(500)
                 .x(targetXScale)
                 .dimension(targetDim)
@@ -378,6 +378,7 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                   .attr("font-family", "Arial")
                   .attr("font-size", "28px")
                   .attr("text-anchor", "middle")
+                  .style("fill", "white")
                   .text(d3.format(".1%")(data[0].value / total));
                   
             var pathPie = svg.selectAll("path")
