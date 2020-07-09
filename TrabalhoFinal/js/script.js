@@ -22,10 +22,7 @@ dividingSections(size, changeSection, sectionSize);
 window.onscroll = function() {myFunction(changeSection)};
 
 function myFunction(changeSection) {
-    if(document.documentElement.scrollTop == 0){
-        document.getElementById(sections[0]).className = "sbOption active"
-    }
-    let pos = Math.trunc(Math.round(document.documentElement.scrollTop/changeSection)/2);
+   let pos = Math.trunc(Math.round(document.documentElement.scrollTop/changeSection)/2);
 
     document.getElementById(sections[pos]).className = "sbOption active"
     for (let index = 0; index < sections.length; index++) {
