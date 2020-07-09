@@ -483,6 +483,27 @@ function stackedBar(data){
         .attr('transform', `translate(${ marginSB.left },0)`)
         .call(yAxis)
         .select('.domain').remove();
+    var legend = svgSB.append("g")
+              .attr("font-family", "sans-serif")
+              .attr("font-size", 10)
+              .attr("text-anchor", "end")
+              .selectAll("g")
+              .data(["Fatalities","Injured"].slice().reverse())
+              .enter().append("g")
+              .attr("transform", function(d, i) { return "translate(-50," + i * 20 + ")"; })
+              .style("fill", 'white');
+
+    legend.append("rect")
+        .attr("x", widthSB - 19)
+        .attr("width", 19)
+        .attr("height", 19)
+        .attr("fill", d => colorSB(d));
+
+    legend.append("text")
+        .attr("x", widthSB - 24)
+        .attr("y", 9.5)
+        .attr("dy", "0.32em")
+        .text(function(d) { return d; });
 }
 
 //Scatterplot
