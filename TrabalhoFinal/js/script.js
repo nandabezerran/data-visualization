@@ -195,7 +195,7 @@ function stackedBar(data){
 }
 
 //Scatterplot
-let marginSp = ({top: 40, right: 50, bottom: 40, left: 60});
+let marginSp = ({top: 50, right: 50, bottom: 40, left: 60});
 let heightSp = 600 - marginSp.top - marginSp.bottom;
 let widthSp = 800;
 let myColorSp = d3.scaleQuantize()
@@ -302,7 +302,7 @@ function scatterplot(data){
         .attr('y', d => y(d.value.occurrences))
         .attr('font-family', 'sans-serif')
         .attr("font-size", 12)
-        .attr('fill', 'black')
+        .attr('fill', 'white')
         .text(d => d.key);
 }
         

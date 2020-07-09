@@ -30,16 +30,34 @@
     
 </head>
 <body>
-    <div class="sidenav">
-        <a class="sbOption active" href="#section1">Statistics</a>
-        <a class="sbOption" href="#section2">Map</a>
-        <a class="sbOption" href="#section3">Motivations and Targets</a>
-        <a class="sbOption" href="#section4">Shooter's Profile</a>
-        <a class="sbOption" href="#section5">Beeswarm</a>
-        <a class="sbOption" href="#section6">Stacked Bar</a>
-        <a class="sbOption" href="#section7">Scatterplot</a>
+    <div class="sidenav" id="sidenav">
+        <a class="sbOption active" href="#section1"><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            Statistics
+            </span></a>
+        <a class="sbOption" href="#section2"><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            Map
+            </span></a>
+        <a class="sbOption" href="#section3"><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            Target and Causes
+            </span></a>
+        <a class="sbOption" href="#section4"><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            Shooter's Profile
+            </span></a>
+        <a class="sbOption" href="#section5"><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            Beeswarm
+            </span></a>
+        <a class="sbOption" href="#section6"><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            Stacked Bar
+            </span></a>
+        <a class="sbOption" href="#section7"><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            ScatterPlot
+            </span></a>
+        <a class="sbOption" href="#section8"><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            Line Chart
+            </span></a>
     </div>
     <div class="scroll-container">
+
         <div class="scroll-area" id="section1"></div>
 
         <div class="scroll-area" id="section2">  
@@ -68,12 +86,13 @@
         <div class="scroll-area" id="section5"><div id="beeswarm" data-aos="fade-right"></div>  </div>  
         <div class="scroll-area" id="section6"><div id="stackedBar" data-aos="fade-left"></div>  </div>      
         <div class="scroll-area" id="section7"><div id="scatterplot" data-aos="fade-right"></div>  </div>  
+        <div class="scroll-area" id="section8"><div id="lineChart" data-aos="fade-left"></div>  </div>  
 
     </div>
     <div id="buttonSpace"></div>
-    </script>
      <!-- Bootstrap javascript files -->
      <script src="https://d3js.org/d3-array.v2.min.js"></script>
+     <script type="module" src="js/lineChart.js"></script>
      <script src="js/genderAge.js"></script>
     <script type="text/javascript" src="js/graphsWithFilter.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
