@@ -86,7 +86,16 @@
         <div class="scroll-area" id="section5"><div id="beeswarm" data-aos="fade-right"></div>  </div>  
         <div class="scroll-area" id="section6"><div id="stackedBar" data-aos="fade-left"></div>  </div>      
         <div class="scroll-area" id="section7"><div id="scatterplot" data-aos="fade-right"></div>  </div>  
-        <div class="scroll-area" id="section8"><div id="lineChart" data-aos="fade-left"></div>  </div>  
+        <div class="scroll-area lc" id="section8">
+            <div id="line-chart" data-aos="fade-right"></div>
+            <form name="scbr" class="scrubber">
+                <button name="b" id="buttonScrubber"></button>
+                <label style="display: flex; align-items: center;">
+                    <input name="i" type=range min=0 max=41 value=0 step=1 style="width: 180px;">
+                    <output name="o" style="margin-left: 0.4em;"></output>
+                </label>
+            </form>
+        </div>  
 
     </div>
     <div id="buttonSpace"></div>

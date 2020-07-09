@@ -46,6 +46,284 @@ let promises = [
 
 Promise.all(promises).then(ready);
 
+let heightLC = 500;
+let widthLC = 800;
+let marginLC = ({top: 20, right: 30, bottom: 30, left: 40});
+let objYear = new Object({year: 1966});  
+let chart = null;
+let lineData = null;
+
+//proxy
+let proxy = new Proxy(objYear, {
+    set: function (target, key, value) { ;
+        chart.update(lineData.slice(0, lineData.indexOf(lineData.find(e => e.key == value)) + 1))
+        target[key] = value;
+        return true;
+    }
+});
+
+//scrubber
+function Scrubber(values, {
+    format = value => value,
+    delay = null,
+    autoplay = true,
+    loop = true,
+    loopDelay = null,
+    alternate = false
+    } = {}) {
+    values = Array.from(values);
+
+    let frame = null;
+    let timer = null;
+    let interval = null;
+    let direction = 1;
+    let i = document.getElementsByName("i")[0];
+    let b = document.getElementsByName("b")[0];
+    let form = document.getElementsByName("scbr")[0];
+    let o = document.getElementsByName("o")[0];
+    function step() {
+        i.valueAsNumber = (i.valueAsNumber + direction + values.length) % values.length;
+        i.dispatchEvent(new CustomEvent("input", {bubbles: true}));
+    }
+    function start() {
+        b.textContent = "Pause";
+        if (delay === null) frame = requestAnimationFrame(tick);
+        else interval = setInterval(tick, delay);
+    }
+    function tick() {
+        if (i.valueAsNumber === (direction > 0 ? values.length - 1 : direction < 0 ? 0 : NaN)) {
+            if (!loop) return stop();
+            if (alternate) direction = -direction;
+            if (loopDelay !== null) {
+            if (frame !== null) cancelAnimationFrame(frame), frame = null;
+            if (interval !== null) clearInterval(interval), interval = null;
+            timer = setTimeout(() => (step(), start()), loopDelay);
+            return;
+            }
+        }
+        if (delay === null) frame = requestAnimationFrame(tick);
+        step();
+    }
+    function stop() {
+        b.textContent = "Play";
+        if (frame !== null) cancelAnimationFrame(frame), frame = null;
+        if (timer !== null) clearTimeout(timer), timer = null;
+        if (interval !== null) clearInterval(interval), interval = null;
+        return false;
+    }
+    function running() {
+        return frame !== null || timer !== null || interval !== null;
+    }
+    i.oninput = event => {
+        if (event && event.isTrusted && running()) stop();
+        form.value = values[i.valueAsNumber];
+        proxy.year = form.value;
+        o.value = format(form.value, i.valueAsNumber, values);
+    };
+    b.onclick = () => {
+        if (running()) return stop();
+        direction = alternate && i.valueAsNumber === values.length - 1 ? -1 : 1;
+        i.valueAsNumber = (i.valueAsNumber + direction) % values.length;
+        i.dispatchEvent(new CustomEvent("input", {bubbles: true}));
+        start();
+        return false;
+    };
+    i.oninput();
+    if (autoplay) start();
+    else stop();
+}
+
+let getLineData = (data) => {
+    let lineData = d3.nest()
+    .key(function(d) {return parseInt(d.Year);})
+    .rollup(function(d) {
+    
+        return d3.sum(d, function(e) { return 1; });
+    
+    })
+    .entries(data).sort((a,b) => a.key - b.key)
+    return lineData;
+}
+
+//Line Chart
+let lineChart = (lineData) => {
+    let data = lineData.slice(0, lineData.indexOf(lineData.find(e => e.key == objYear.year)) + 1)
+    let bisectDate = d3.bisector(function(d) { return d.key; }).left;
+
+
+    let range = []
+    for(let obj of lineData){
+        range.push(+obj.key)
+    }
+    let focus = null;
+    
+    let x = d3.scaleTime()
+        .domain(d3.extent(data, d => d.key))
+        .range([marginLC.left, widthLC - marginLC.right])
+    
+    let xAxis = g => g
+        .attr("transform", `translate(0,${heightLC - marginLC.bottom})`)
+        .call(d3.axisBottom(x).tickFormat(d3.format("d")).ticks())  
+    
+    let y = d3.scaleLinear()
+        .domain([0, 70])
+        .range([heightLC - marginLC.bottom, marginLC.top])
+    
+    let yAxis = g => g
+            .attr("transform", `translate(${marginLC.left},0)`)
+            .call(d3.axisLeft(y))
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("fill", "white")
+            .attr("y", 6)
+            .attr("x", -20)
+            .attr("dy", ".90em")
+            .attr("font-size", "12px")
+            .text("Número de casos");
+        
+    let line = d3.line()
+        .defined(d => !isNaN(d.value))
+        .x(d => x(d.key))
+        .y(d => y(d.value))
+    
+    let svg = d3.select("#line-chart").append("svg")
+                    .attr('width', widthLC )
+                    .attr('height', heightLC)
+
+    let axisX = svg.append("g")
+        .call(xAxis);
+
+    let axisY = svg.append("g")
+        .call(yAxis);
+
+    let path = svg.append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "red")
+        .attr("stroke-width", 1.5)
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("d", line)
+    
+    let content = svg.append("g")
+        .attr("fill", "none")
+        .attr("pointer-events", "all")
+        .selectAll("rect")
+        .data(d3.pairs(data))
+        .join("rect")
+        .attr("x", ([a, b]) => x(a.key))
+        .attr("height", heightLC)
+        .attr("width", ([a, b]) => x(b.key) - x(a.key))
+    
+    chart = Object.assign(svg.node(), {
+        update(newdata) {
+        axisX.remove();
+        axisY.remove();
+        path.remove();
+        if(focus != null){
+            focus.remove();
+        }
+        content.remove();
+        x = d3.scaleTime()
+            .domain(d3.extent(newdata, d => d.key))
+            .range([marginLC.left, widthLC - marginLC.right])
+
+        xAxis = g => g
+            .attr("transform", `translate(0,${heightLC - marginLC.bottom})`)
+            .call(d3.axisBottom(x).tickFormat(d3.format("d")).ticks()) 
+
+        line = d3.line()
+            .defined(d => !isNaN(d.value))
+            .x(d => x(d.key))
+            .y(d => y(d.value))
+
+        axisX = svg.append("g")
+            .call(xAxis);
+
+        axisY = svg.append("g")
+            .call(yAxis);
+
+        path = svg.append("path")
+            .datum(newdata)
+            .attr("fill", "none")
+            .attr("stroke", "red")
+            .attr("stroke-width", 1.5)
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
+            .attr("d", line)
+        
+        focus = svg.append("g")
+            .attr("transform", "translate(" + marginLC.left + "," + marginLC.top + ")")
+            .attr("class", "focus")
+            .style("display", "none");
+
+        focus.append("circle")
+            .attr("r", 4.5);
+        
+        focus.append("rect")
+            .attr("height", 20)
+            .attr("x", 10)
+            .attr("y", -25)
+            .style("fill", "white")
+
+        focus.append("text")
+            .attr("y", -15)
+            .attr("dy", ".31em")
+            .attr("font-size", "10px")
+            .attr("font-family", "sans-serif")
+
+        function mousemovend() {
+            var pos = d3.mouse(this)[0];
+            var x0 = x.invert(pos),
+                i = bisectDate(newdata, x0, 1),
+                d0 = newdata[i - 1],
+                d1 = newdata[i],
+                d = x0 - d0.key > d1.key - x0 ? d1 : d0;
+            focus.attr("transform", "translate(" + x(d.key) + "," + y(d.value) + ")");
+
+            //alinhando a tooltip
+            if (pos > (width/2) ) {
+            focus.select("text")
+                .attr("x", -100)
+            focus.select("rect")
+                .attr("x", -105)
+            }else{
+            focus.select("text")
+                .attr("x", 5)
+            focus.select("rect")
+                .attr("x", 0)
+            }
+
+            //adequando o tamanho do rec de acordo com o numero de casos
+            if(d.value > 9){
+                focus.select("rect")
+                    .attr("width", 110);
+            }else{
+                focus.select("rect")
+                    .attr("width", 105);
+            }
+
+            focus.select("text").text(function() { return "Ano: " + d.key + " | Casos: " + d.value; });
+        }
+
+        content = svg.append("g")
+            .attr("fill", "none")
+            .attr("pointer-events", "all")
+            .selectAll("rect")
+            .data(d3.pairs(newdata))
+            .join("rect")
+            .attr("x", ([a, b]) => x(a.key))
+            .attr("height", heightLC)
+            .attr("width", ([a, b]) => x(b.key) - x(a.key))
+            .on("mouseover", function() { focus.style("display", null); })
+            .on("mouseout", function() { focus.style("display", "none"); })
+            .on("mousemove", mousemovend);
+
+        }
+    })
+    Scrubber(range, {loop: false, autoplay: false, delay:200})
+}
+
 //Beeswarm
 let myColor = d3.scaleQuantize()
                 .domain([0, 100])
@@ -321,6 +599,8 @@ function scatterplot(data){
         
 //Function to show the graphs
 function ready([data]){
+    lineData = getLineData(data);
+    lineChart(lineData);
     beeswarm(data);
     stackedBar(data);
     scatterplot(data);
