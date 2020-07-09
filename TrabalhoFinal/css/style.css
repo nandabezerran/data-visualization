@@ -90,9 +90,14 @@ html {
   font-size: 15px !important;
   font-weight: bold !important;
 }
-.material-icons.active {
-  font-size: 30px !important;
+
+#navBBActive{
+    font-size: 25px !important;
+    padding-left: 2px !important;
+    vertical-align: bottom !important;
+
 }
+
 .dc-chart g.row text {
   fill: black;
 }
@@ -181,7 +186,6 @@ html {
   font-size: 38px !important;
   padding-left: 7px !important;
 }
-
 
 
 .scrubber {

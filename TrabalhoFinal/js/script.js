@@ -25,9 +25,13 @@ function myFunction(changeSection) {
    let pos = Math.trunc(Math.round(document.documentElement.scrollTop/changeSection)/2);
 
     document.getElementById(sections[pos]).className = "sbOption active"
+    let aux = document.getElementById(sections[pos]).innerHTML.split('</i>');
+    document.getElementById(sections[pos]).innerHTML = '<i class="material-icons" id="navBBActive">fiber_manual_record</i>' + aux[1];
     for (let index = 0; index < sections.length; index++) {
         if (index != pos){
             document.getElementById(sections[index]).className = "sbOption"
+            aux = document.getElementById(sections[index]).innerHTML.split('</i>');
+            document.getElementById(sections[index]).innerHTML = '<i class="material-icons" id="navBB">fiber_manual_record</i>' + aux[1];
         }
         
     }
