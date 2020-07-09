@@ -3,23 +3,39 @@
 AOS.init();
 
 //SideNavBar
-$(document).ready(function(){
-    $('.sbOption').click(function(event){
-        //remove all pre-existing active classes
-        $('.active').removeClass('active');
 
-        //add the active class to the link we clicked
-        $(this).addClass('active');
+let size = 8;
+let sectionSize = 627;
+let changeSection = sectionSize/2;
+let sections = [];
+let scrollPosition = [];
+function dividingSections(size, changeSection){
+    let pos = changeSection;
+    let str = 'nb';
+    for (let index = 0; index < size; index++) {
+        sections[index] = str.concat(index+1);
+        pos = pos*3; 
+    }
+}
+dividingSections(size, changeSection, sectionSize);
 
-        //Load the content
-        //e.g.
-        //load the page that the link was pointing to
-        $('.sbOption').load($(this).find(a).attr('href'));      
+window.onscroll = function() {myFunction(changeSection)};
 
-        event.preventDefault();
-    });
-});
+function myFunction(changeSection) {
+    if(document.documentElement.scrollTop == 0){
+        document.getElementById(sections[0]).className = "sbOption active"
+    }
+    let pos = Math.trunc(Math.round(document.documentElement.scrollTop/changeSection)/2);
 
+    document.getElementById(sections[pos]).className = "sbOption active"
+    for (let index = 0; index < sections.length; index++) {
+        if (index != pos){
+            document.getElementById(sections[index]).className = "sbOption"
+        }
+        
+    }
+    
+}
 
 //Datasets
 let promises = [
