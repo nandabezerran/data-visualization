@@ -30,7 +30,7 @@ html {
 }
 
 .scroll-area{
-    background: #000000;
+    background: #1f1e1e;/*#000000;*/
 }
 
 .lc {
@@ -318,4 +318,44 @@ input[type=range]:focus::-ms-fill-upper {
   font-family: sans-serif;
   font-size: 12px;
   line-height: 20px;
+}
+
+#scatterText {
+  padding-left: 8%; 
+}
+
+#scatterText h5{
+  text-align: justify; 
+  font-family: CNN;
+}
+
+#fatalitiesText h5{
+  text-align: justify; 
+  font-family: CNN;
+}
+
+#scatterText h1{
+    color: #fee5d9;
+
+  font-family: CNN;
+}
+
+#fatalitiesText h1{
+  font-family: CNN;
+  color: #fee5d9;
+}
+
+#beeswarm h1{
+  font-family: "Publico Headline",serif;
+  position: absolute;
+  color: #fee5d9;
+  font-weight: bold;
+}
+
+#beeswarm h5{
+  font-family: "Publico Headline",serif;
+  position: absolute;
+  text-align: justify; 
+  color: white;
+  padding-top: 15%;
 }
