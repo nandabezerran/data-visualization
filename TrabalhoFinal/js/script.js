@@ -712,6 +712,7 @@ let scrubberMap = (data) => {
       .html("<span id='name'></span><br>Qtde de casos: <span id='casos'></span>")
 
     let path = d3.geoPath();
+    let states = null;
 
     let colorScale = d3.scaleQuantize()
                 .domain([0, returnMaxValue(data)])
@@ -721,30 +722,6 @@ let scrubberMap = (data) => {
                     .attr('width', widthSM )
                     .attr('height', heightSM)
 
-    let states = svg.append("g")
-        .attr("class", "states")
-        .selectAll("path")
-        .data(topojson.feature(us, us.objects.states).features)
-        .enter().append("path")
-        .attr("fill", d => colorScale(data.get(d.id)))
-        .attr("d", path)
-        .on("mouseover", function(d){
-            d3.select(this) // seleciona o elemento atual
-            .style("cursor", "pointer")           //muda o mouse para mãozinha
-            .attr("stroke-width", 3)
-            .attr("stroke","#000");
-            const rect = this.getBoundingClientRect();
-            showTooltip(d.id, rect.x, rect.y);
-        })
-        .on("mouseout", function(d){
-            d3.select(this)
-            .style("cursor", "default")
-            .attr("stroke-width", 0)
-            .attr("stroke","none"); 
-            //volta ao valor padrão
-            hideTooltip();
-        })
-
     svg.append("path")
         .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
         .attr("class", "states")
@@ -752,7 +729,9 @@ let scrubberMap = (data) => {
 
     chartSM = Object.assign(svg.node(), {
         update(newdata) {
-            states.remove();
+            if(states != null){
+                states.remove();
+            }
             colorScale = d3.scaleQuantize()
                 .domain([0, returnMaxValue(newdata)])
                 .range(d3.schemeReds[8]);
