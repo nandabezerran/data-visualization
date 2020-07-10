@@ -25,6 +25,7 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://unpkg.com/crossfilter2@1.5.2/crossfilter.min.js"></script>
     <script src="https://unpkg.com/dc@4.0.5/dist/dc.min.js"></script>
+    <script src="https://unpkg.com/topojson-client@3"></script>
     <script type="module" src="https://rawgit.com/ckrack/scrollsnap-polyfill/develop/dist/scrollsnap-polyfill.bundled.js"></script>
 
     
@@ -54,6 +55,9 @@
             </span></a>
         <a class="sbOption" href="#section8" id='nb8'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
             Line Chart
+            </span></a>
+        <a class="sbOption" href="#section9" id='nb9'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            placeholder
             </span></a>
     </div>
     <div class="scroll-container">
@@ -89,14 +93,24 @@
         <div class="scroll-area" id="section7"><div id="scatterplot" data-aos="fade-right"></div>  </div>  
         <div class="scroll-area lc" id="section8">
             <div id="line-chart" data-aos="fade-right"></div>
-            <form name="scbr" class="scrubber">
-                <button name="b" id="buttonScrubber"></button>
+            <form name="scrubberLine" class="scrubber">
+                <button name="b" class="buttonScrubber"></button>
                 <label style="display: flex; align-items: center;">
                     <input name="i" type=range min=0 max=41 value=0 step=1 style="width: 180px;">
                     <output name="o" style="margin-left: 0.4em;"></output>
                 </label>
             </form>
-        </div>  
+        </div> 
+        <div class="scroll-area lc sm" id="section9">
+            <div id="scrubberMap" data-aos="fade-left"> </div>
+            <form name="scrubberMap" class="scrubber">
+                <button name="bMap" class="buttonScrubber"></button>
+                <label style="display: flex; align-items: center;">
+                    <input name="iMap" type=range min=0 max=41 value=0 step=1 style="width: 180px;">
+                    <output name="oMap" style="margin-left: 0.4em;"></output>
+                </label>
+            </form>
+        </div> 
 
     </div>
     <div id="buttonSpace"></div>

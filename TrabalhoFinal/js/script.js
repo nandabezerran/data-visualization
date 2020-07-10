@@ -4,7 +4,7 @@ AOS.init();
 
 //SideNavBar
 
-let size = 8;
+let size = 9;
 let sectionSize = 627;
 let changeSection = sectionSize/2;
 let sections = [];
@@ -41,11 +41,19 @@ function myFunction(changeSection) {
 //Datasets
 let promises = [
     d3.csv("https://gist.githubusercontent.com/nandabezerran/ead62cdad2f5a94e50f6f9b3c5b33ce2/raw/d00336972ffce34fb8292bc9b92ffb96eb8c65a4/MassShootings.csv").then(function(data) {
-    data.forEach(function(d) {
-        d.Year = d.Date.slice(-4);
-    })
-    return data
-    })
+        data.forEach(function(d) {
+            d.Year = d.Date.slice(-4);
+        })
+        return data
+    }),
+    d3.csv("https://gist.githubusercontent.com/thaisnl/4ac24ac0f006e24e38dcc814c04bbefe/raw/92d4359a14d75113091a3f8fb8a3fdbb004d8f81/states.csv").then(function (data) {
+        let nameMap = d3.map()
+        data.forEach(function(d) {
+            nameMap.set(d.st, d.stname)
+        })
+        return nameMap
+    }),
+    d3.json("https://d3js.org/us-10m.v1.json")
 ]
 
 Promise.all(promises).then(ready);
@@ -57,8 +65,15 @@ let objYear = new Object({year: 1966});
 let chart = null;
 let lineData = null;
 
+let range = null;
+
+let chartSM = null;
+let nameById = null;
+let aux = null;
+let us = null;
+
 //proxy
-let proxy = new Proxy(objYear, {
+let proxyLineChart = new Proxy(objYear, {
     set: function (target, key, value) { ;
         chart.update(lineData.slice(0, lineData.indexOf(lineData.find(e => e.key == value)) + 1))
         target[key] = value;
@@ -67,7 +82,7 @@ let proxy = new Proxy(objYear, {
 });
 
 //scrubber
-function Scrubber(values, {
+function Scrubber(values, i, o, form, b, whichScrubber, {
     format = value => value,
     delay = null,
     autoplay = true,
@@ -81,10 +96,6 @@ function Scrubber(values, {
     let timer = null;
     let interval = null;
     let direction = 1;
-    let i = document.getElementsByName("i")[0];
-    let b = document.getElementsByName("b")[0];
-    let form = document.getElementsByName("scbr")[0];
-    let o = document.getElementsByName("o")[0];
     function step() {
         i.valueAsNumber = (i.valueAsNumber + direction + values.length) % values.length;
         i.dispatchEvent(new CustomEvent("input", {bubbles: true}));
@@ -121,7 +132,11 @@ function Scrubber(values, {
     i.oninput = event => {
         if (event && event.isTrusted && running()) stop();
         form.value = values[i.valueAsNumber];
-        proxy.year = form.value;
+        if(whichScrubber == 1){
+            proxyLineChart.year = form.value;
+        }else {
+            proxyMap.year = form.value;
+        }
         o.value = format(form.value, i.valueAsNumber, values);
     };
     b.onclick = () => {
@@ -149,16 +164,18 @@ let getLineData = (data) => {
     return lineData;
 }
 
+let getRange = () => {
+    let range = []
+    for(let obj of lineData){
+        range.push(+obj.key)
+    }
+    return range;
+}
 //Line Chart
 let lineChart = (lineData) => {
     let data = lineData.slice(0, lineData.indexOf(lineData.find(e => e.key == objYear.year)) + 1)
     let bisectDate = d3.bisector(function(d) { return d.key; }).left;
 
-
-    let range = []
-    for(let obj of lineData){
-        range.push(+obj.key)
-    }
     let focus = null;
     
     let x = d3.scaleTime()
@@ -325,7 +342,11 @@ let lineChart = (lineData) => {
 
         }
     })
-    Scrubber(range, {loop: false, autoplay: false, delay:200})
+    let button = document.getElementsByName("b")[0];
+    let input = document.getElementsByName("i")[0];
+    let output = document.getElementsByName("o")[0];
+    let form = document.getElementsByName("scrubberLine")[0]
+    Scrubber(range, input, output, form, button, 1, {loop: false, autoplay: false, delay:200})
 }
 
 //Beeswarm
@@ -621,10 +642,162 @@ function scatterplot(data){
         .attr('fill', 'white')
         .text(d => d.key);
 }
+
+let mapYear = new Object({year: 1966})
+
+//map with scrubber
+let proxyMap = new Proxy(objYear, {
+    set: function (target, key, value) {
+        casesById = dataAt(value);
+        chartSM.update(casesById)
+        target[key] = value;
+        return true;
+    }
+});
+
+let showTooltip = (county_id, x, y) => {
+    const offset = 30;
+    const t = d3.select("#tooltip");
+    t.select("#casos").text(casesById.get(county_id));
+    t.select("#name").text(nameById.get(county_id));
+    t.classed("hidden", false);
+    const rect = t.node().getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
+    if (x + offset + w > widthSM) {
+      x = x - w;
+    }
+    t.style("left", x + offset + "px");
+    t.style("top", y - h + "px");
+}
+
+let hideTooltip = () => {
+    d3.select("#tooltip")
+    .classed("hidden", true)
+}
+
+let dataAt = (year) => {
+    let cases = d3.map();
+    for ( const [id, name] of Object.entries(nameById)) {
+        let filtered = aux.filter(s => {
+            if (s.State == name && s.Year == year) {
+                return true;
+            }
+            return false;
+        });  
+        cases.set(id.substr(1), +filtered.length);
+    }
+    return cases;
+}
+
+let returnMaxValue = (data) => {
+    //gambiarra pra nao ficar a escala de 0,0 pq os 0 fica com a cor mais escura
+    if(Math.max(...data.values()) == 0){
+      return 1;
+    }
+    return Math.max(...data.values());
+}
+
+const widthSM = 960;
+const heightSM = 600;
+let casesById = null;
+
+let scrubberMap = (data) => {
+
+    d3.select("body")
+      .append("div")
+      .attr("id", "tooltip")
+      .attr("class", "hidden")
+      .append("p")
+      .html("<span id='name'></span><br>Qtde de casos: <span id='casos'></span>")
+
+    let path = d3.geoPath();
+
+    let colorScale = d3.scaleQuantize()
+                .domain([0, returnMaxValue(data)])
+                .range(d3.schemeReds[8]);
+
+    const svg = d3.select("#scrubberMap").append("svg")
+                    .attr('width', widthSM )
+                    .attr('height', heightSM)
+
+    let states = svg.append("g")
+        .attr("class", "states")
+        .selectAll("path")
+        .data(topojson.feature(us, us.objects.states).features)
+        .enter().append("path")
+        .attr("fill", d => colorScale(data.get(d.id)))
+        .attr("d", path)
+        .on("mouseover", function(d){
+            d3.select(this) // seleciona o elemento atual
+            .style("cursor", "pointer")           //muda o mouse para mãozinha
+            .attr("stroke-width", 3)
+            .attr("stroke","#000");
+            const rect = this.getBoundingClientRect();
+            showTooltip(d.id, rect.x, rect.y);
+        })
+        .on("mouseout", function(d){
+            d3.select(this)
+            .style("cursor", "default")
+            .attr("stroke-width", 0)
+            .attr("stroke","none"); 
+            //volta ao valor padrão
+            hideTooltip();
+        })
+
+    svg.append("path")
+        .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+        .attr("class", "states")
+        .attr("d", path)
+
+    chartSM = Object.assign(svg.node(), {
+        update(newdata) {
+            states.remove();
+            colorScale = d3.scaleQuantize()
+                .domain([0, returnMaxValue(newdata)])
+                .range(d3.schemeReds[8]);
+            states = svg.append("g")
+                .attr("class", "states")
+                .selectAll("path")
+                .data(topojson.feature(us, us.objects.states).features)
+                .enter().append("path")
+                .attr("fill", d => colorScale(newdata.get(d.id)))
+                .attr("d", path)
+                .on("mouseover", function(d){
+                    d3.select(this) 
+                    .style("cursor", "pointer")
+                    .attr("stroke-width", 3)
+                    .attr("stroke","#000");
+                    const rect = this.getBoundingClientRect();
+                    showTooltip(d.id, rect.x + window.scrollX, rect.y + window.scrollY);
+                })
+                .on("mouseout", function(d){
+                    d3.select(this)
+                    .style("cursor", "default")
+                    .attr("stroke-width", 0)
+                    .attr("stroke","none");
+                    hideTooltip();
+                })
+
+        }
+    })
+    let button = document.getElementsByName("bMap")[0];
+    let input = document.getElementsByName("iMap")[0];
+    let output = document.getElementsByName("oMap")[0];
+    let form = document.getElementsByName("scrubberMap")[0]
+    Scrubber(range, input, output, form, button, 2, {loop: false, autoplay: false, delay:200})
+}
         
 //Function to show the graphs
-function ready([data]){
+function ready([data, statesById, topo]){
     lineData = getLineData(data);
+    nameById = statesById;
+    us = topo;
+    aux = data;
+    range = getRange();
+    casesById = dataAt(mapYear.year);
+
+    scrubberMap(casesById);
     lineChart(lineData);
     beeswarm(data);
     stackedBar(data);
