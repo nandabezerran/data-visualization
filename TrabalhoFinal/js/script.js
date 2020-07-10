@@ -195,12 +195,13 @@ let lineChart = (lineData) => {
             .call(d3.axisLeft(y))
             .append("text")
             .attr("transform", "rotate(-90)")
+            .attr("y", 0 - marginLC.left)
+            .attr("x",0 - (heightLC / 2))
             .attr("fill", "white")
-            .attr("y", 6)
-            .attr("x", -20)
-            .attr("dy", ".90em")
             .attr("font-size", "12px")
-            .text("Número de casos");
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Number of occurences"); 
         
     let line = d3.line()
         .defined(d => !isNaN(d.value))
