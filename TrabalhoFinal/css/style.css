@@ -34,7 +34,7 @@ html {
 }
 
 .scroll-area{
-    background: #000000;
+    background: #1f1e1e;/*#000000;*/
 }
 
 .lc {
@@ -324,4 +324,65 @@ input[type=range]:focus::-ms-fill-upper {
   font-family: sans-serif;
   font-size: 12px;
   line-height: 20px;
+}
+
+#scatterText {
+  padding-left: 8%; 
+}
+
+#scatterText h5{
+  text-align: justify; 
+  font-family: CNN;
+  color: #E6E6E6;
+  font-family: "Balto", Helvetica, sans-serif;
+  /*line-height: 1.5;*/
+  text-rendering: optimizelegibility;
+}
+
+#fatalitiesText h5{
+  text-align: justify; 
+  font-family: CNN;
+  color: #E6E6E6;
+  font-family: "Balto", Helvetica, sans-serif;
+  /*line-height: 1.5;*/
+  text-rendering: optimizelegibility;
+}
+
+#scatterText h2{
+  color: white;
+  font-family: "Balto", Helvetica, sans-serif;
+  line-height: 1.5;
+  text-rendering: optimizelegibility;
+  font-weight: bold;
+}
+
+#fatalitiesText h1{
+  color: white;
+  font-family: "Balto", Helvetica, sans-serif;
+  line-height: 1.5;
+  text-rendering: optimizelegibility;
+  font-weight: bold;
+}
+
+#beeswarm h1{
+  font-family: "Publico Headline",serif;
+  position: absolute;
+  font-weight: bold;
+  color: white;
+  font-family: "Balto", Helvetica, sans-serif;
+  line-height: 1.5;
+  text-rendering: optimizelegibility;
+
+}
+
+#beeswarm h5{
+  font-family: "Publico Headline",serif;
+  position: absolute;
+  text-align: justify; 
+  padding-top: 15%;
+  
+  color: #E6E6E6;
+  font-family: "Balto", Helvetica, sans-serif;
+  /*line-height: 1.5;*/
+  text-rendering: optimizelegibility;
 }
