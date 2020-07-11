@@ -1,11 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
+
 html {
-    background: #f2f2f2;
+    background:#1f1e1e;;
 }
 .scroll-container,
 .scroll-area {
     height: 700px;;
     font-size: 60px;
-    
 }
 
 .scroll-container {
@@ -16,10 +17,10 @@ html {
 .scroll-area {
     scroll-snap-align: start;
 }
-
-#pieChart, #genderAge {
-  margin: 100px;
-}
+#genderAge {
+  margin-right: -70px;
+  margin-left: 50px;
+} 
 
 .scroll-container,
 .scroll-area {
@@ -33,17 +34,68 @@ html {
     color: white;
 }
 
+
 .scroll-area{
-    background: #1f1e1e;/*#000000;*/
+    background: #1f1e1e;;
 }
 
 .lc {
-  padding-top: 50px;
   flex-direction: column;
+  padding-top: 50px;
+}
+
+#chartAndScrubber {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#statistics {
+  display: flex;
+  align-items: center;
+  margin-left: 5%;
+  flex-direction: column;
+}
+
+#statistics p {
+  line-height: 80px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: 'Roboto';
+  color: black;
+}
+
+.statsBox span {
+  font-size: 25px;
+}
+
+#section8, #section3, #section4 {
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.statsBox {
+  border-radius: 20px;
+  width: 220px;
+  height: 100px;
+  margin-bottom: 70px;
+  padding: 10px;
+  background-color: white;
+  opacity: 75%;
+  box-shadow: 0px 0px 10px 1px red;
+}
+
+.statsBox:hover {
+  transform: scale(1.2); 
 }
 
 .sm {
   padding-bottom: 100px;
+}
+
+.sectionTitle {
+  flex-basis: 100%;
 }
 
 /* The sidebar menu */
@@ -111,7 +163,7 @@ html {
 }
 #map {
   width: 800px;
-  height: 627px;
+  height: 600px;
 }
 
 .info {
@@ -386,3 +438,4 @@ input[type=range]:focus::-ms-fill-upper {
   /*line-height: 1.5;*/
   text-rendering: optimizelegibility;
 }
+

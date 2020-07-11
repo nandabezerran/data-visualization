@@ -71,25 +71,20 @@
             </div>   
         </div>
         <div class="scroll-area" id="section3"> 
-            <div class="col-6">
-                
-                <div id="chart1">
+            <h1 class="sectionTitle" data-aos="fade-left">Targets and Motivation</h1> 
+                <div id="chart1" data-aos="fade-left" class="col-3">
                     <h5>Motivations</h5>
                 </div>
-            </div>
-            <div class="col-4">
-                <div id="chart2">
+                <div id="chart2" data-aos="fade-right" class="col-3">
                     <h5>Targets</h5>
                 </div>
-            </div>
         </div>
         <div class="scroll-area" id="section4">
+            <h1 class="sectionTitle" data-aos="fade-left">Shooter's Profile</h1>
             <div id="pieChart" data-aos="fade-left"> </div>
             <div id="genderAge" data-aos="fade-right"></div>
-            
         </div>
         <div class="scroll-area" id="section5">
-
             <div id="beeswarm" data-aos="fade-right"> 
                     <div class="col-7">
 
@@ -125,15 +120,29 @@ The Las Vegas strip mass shooting in June 2016 was one of the worst mass shots i
             </div>
 
         </div>  
-        <div class="scroll-area lc" id="section8">
-            <div id="line-chart" data-aos="fade-right"></div>
-            <form name="scrubberLine" class="scrubber">
-                <button name="b" class="buttonScrubber"></button>
-                <label style="display: flex; align-items: center;">
-                    <input name="i" type=range min=0 max=41 value=0 step=1 style="width: 180px;">
-                    <output name="o" style="margin-left: 0.4em;"></output>
-                </label>
-            </form>
+        <div class="scroll-area" id="section8">
+            <h1 class="sectionTitle">Cases over the years</h1>
+            <div id="chartAndScrubber">
+                <div id="line-chart" data-aos="fade-right"></div>
+                <form name="scrubberLine" class="scrubber">
+                    <button name="b" class="buttonScrubber"></button>
+                    <label style="display: flex; align-items: center;">
+                        <input name="i" type=range min=0 max=41 value=0 step=1 style="width: 180px;">
+                        <output name="o" style="margin-left: 0.4em;"></output>
+                    </label>
+                </form>
+            </div>
+            <div id="statistics" data-aos="fade-right">
+                <div class="statsBox">
+                    <p>Total of occurences: <span id="numberOfCases"></span> </p>
+                </div>
+                <div class="statsBox">
+                    <p>Total of fatalities: <span id="numberOfFatalities"></span></p>
+                </div>
+                <div class="statsBox">
+                    <p>Total of injured: <span id="numberOfInjured"></span></p>
+                </div>
+            </div>
         </div> 
         <div class="scroll-area lc sm" id="section9">
             <div id="scrubberMap" data-aos="fade-left"> </div>

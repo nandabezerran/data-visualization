@@ -8,7 +8,7 @@ let width = 400;
 let dataMap;
 let dataset;
 let widthPc = 500;
-let heightPc = 900;
+let heightPc = 500;
 
 function dataMapCallback(data){
     let rateMap = d3.map()

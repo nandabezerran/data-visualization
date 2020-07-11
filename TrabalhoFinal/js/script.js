@@ -767,9 +767,38 @@ let scrubberMap = (data) => {
     let form = document.getElementsByName("scrubberMap")[0]
     Scrubber(range, input, output, form, button, 2, {loop: false, autoplay: false, delay:200})
 }
+
+let getTotalOfCases = (data) => {
+    return data.length;
+}
+
+let getTotalOfFatalities = (data) => {
+    let fat = 0;
+    data.forEach(d => {
+        fat = fat + (+d.Fatalities);
+    })
+    return fat;
+}
+
+let getTotalOfInjured = (data) => {
+    let inj = 0;
+    data.forEach(d => {
+        inj = inj + (+d.Injured)
+    })
+    return inj;
+}
         
 //Function to show the graphs
 function ready([data, statesById, topo]){
+    d3.select("#numberOfFatalities")
+        .text(getTotalOfFatalities(data));
+
+    d3.select("#numberOfInjured")
+        .text(getTotalOfInjured(data))
+
+    d3.select("#numberOfCases")
+        .text(getTotalOfCases(data))
+
     lineData = getLineData(data);
     nameById = statesById;
     us = topo;
