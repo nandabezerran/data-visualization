@@ -446,20 +446,13 @@ input[type=range]:focus::-ms-fill-upper {
   line-height: 20px;
 }
 
-#scatterText {
-  padding-left: 8%; 
+
+#scatterplot{
+  float:right;
 }
 
 #scatterText h5{
-  text-align: justify; 
-  font-family: CNN;
-  color: #E6E6E6;
-  font-family: "Balto", Helvetica, sans-serif;
-  /*line-height: 1.5;*/
-  text-rendering: optimizelegibility;
-}
-
-#fatalitiesText h5{
+  float: left;
   text-align: justify; 
   font-family: CNN;
   color: #E6E6E6;
@@ -469,6 +462,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 #scatterText h2{
+  float: left;
   color: white;
   font-family: "Balto", Helvetica, sans-serif;
   line-height: 1.5;
@@ -476,12 +470,24 @@ input[type=range]:focus::-ms-fill-upper {
   font-weight: bold;
 }
 
+/*#stackedBar{
+  float:right;
+}*/
+
 #fatalitiesText h1{
   color: white;
   font-family: "Balto", Helvetica, sans-serif;
   line-height: 1.5;
   text-rendering: optimizelegibility;
   font-weight: bold;
+}
+
+#fatalitiesText h5{
+  text-align: justify; 
+  font-family: CNN;
+  color: #E6E6E6;
+  font-family: "Balto", Helvetica, sans-serif;
+  text-rendering: optimizelegibility;
 }
 
 #beeswarm h1{
@@ -492,7 +498,7 @@ input[type=range]:focus::-ms-fill-upper {
   font-family: "Balto", Helvetica, sans-serif;
   line-height: 1.5;
   text-rendering: optimizelegibility;
-
+  float:none;
 }
 
 #beeswarm h5{
@@ -500,7 +506,6 @@ input[type=range]:focus::-ms-fill-upper {
   position: absolute;
   text-align: justify; 
   padding-top: 15%;
-  
   color: #E6E6E6;
   font-family: "Balto", Helvetica, sans-serif;
   /*line-height: 1.5;*/
