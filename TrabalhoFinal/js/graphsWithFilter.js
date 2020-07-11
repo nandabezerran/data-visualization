@@ -305,7 +305,6 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                 onEachFeature: onEachFeature
             }).addTo(map)
             //Configuring graphs
-            console.log(data);
             chart1.width(1200)
                 .height(500)
                 .x(causeXscale)
@@ -401,7 +400,7 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                 .attr("y", "0.7em")
                 .attr("fill-opacity", 0.7)
                 .text(d => d.value.toLocaleString()));
-           
+                
             chart = Object.assign(svg.node(), {
               update(newdata) {
                 total = newdata.reduce((accum,item) => accum + item.value, 0)

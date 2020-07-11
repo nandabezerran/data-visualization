@@ -43,7 +43,23 @@ html {
   flex-direction: column;
   padding-top: 50px;
 }
+#normalMap{
+  display: block;
+}
 
+#animatedMap{
+  display: none;
+}
+
+#inputBox{
+  top: 116%;
+  left: 45%;
+  font-size: 5px;
+  z-index: 1;
+  position: absolute;
+  font-size: 13px;
+  font-family: "Balto", Helvetica, sans-serif;
+}
 #chartAndScrubber {
   display: flex;
   align-items: center;
@@ -163,7 +179,14 @@ html {
 }
 #map {
   width: 800px;
-  height: 600px;
+  height: 550px;
+  margin-bottom: 10%;
+}
+input[type=radio]{
+  vertical-align: middle;
+  margin-right: 2px;
+  margin-bottom: 2px;
+  font-size: 6px;
 }
 
 .info {

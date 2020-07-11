@@ -4,7 +4,7 @@ AOS.init();
 
 //SideNavBar
 
-let size = 9;
+let size = 8;
 let sectionSize = 627;
 let changeSection = sectionSize/2;
 let sections = [];
@@ -23,19 +23,35 @@ window.onscroll = function() {myFunction(changeSection)};
 
 function myFunction(changeSection) {
    let pos = Math.trunc(Math.round(document.documentElement.scrollTop/changeSection)/2);
-
-    document.getElementById(sections[pos]).className = "sbOption active"
-    let aux = document.getElementById(sections[pos]).innerHTML.split('</i>');
-    document.getElementById(sections[pos]).innerHTML = '<i class="material-icons" id="navBBActive">fiber_manual_record</i>' + aux[1];
-    for (let index = 0; index < sections.length; index++) {
-        if (index != pos){
-            document.getElementById(sections[index]).className = "sbOption"
-            aux = document.getElementById(sections[index]).innerHTML.split('</i>');
-            document.getElementById(sections[index]).innerHTML = '<i class="material-icons" id="navBB">fiber_manual_record</i>' + aux[1];
+    if(pos < size){
+        document.getElementById(sections[pos]).className = "sbOption active"
+        let aux = document.getElementById(sections[pos]).innerHTML.split('</i>');
+        document.getElementById(sections[pos]).innerHTML = '<i class="material-icons" id="navBBActive">fiber_manual_record</i>' + aux[1];
+        for (let index = 0; index < sections.length; index++) {
+            if (index != pos){
+                document.getElementById(sections[index]).className = "sbOption"
+                aux = document.getElementById(sections[index]).innerHTML.split('</i>');
+                document.getElementById(sections[index]).innerHTML = '<i class="material-icons" id="navBB">fiber_manual_record</i>' + aux[1];
+            }
+            
         }
-        
     }
     
+}
+$("input[name='map']").on("click", function(){
+    $("#normalMap").toggle(this.value === "false" && this.checked);
+    $("#animatedMap").toggle(this.value === "true" && this.checked);
+});
+function switchDivs(){
+    var map = document.getElementById("normalMap");
+    var animatedMap = document.getElementById("animatedMap");
+    if (animatedMap.style.display == "none") {
+        animatedMap.style.display = "block";
+        map.style.display = "none"
+    } else {
+        animatedMap.style.display = "none";
+        map.style.display = "block"
+    }
 }
 
 //Datasets
@@ -811,4 +827,5 @@ function ready([data, statesById, topo]){
     beeswarm(data);
     stackedBar(data);
     scatterplot(data);
+    document.getElementById("meajuda").addEventListener("click", switchDivs, false);
 }

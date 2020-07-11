@@ -56,19 +56,32 @@
         <a class="sbOption" href="#section8" id='nb8'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
             Line Chart
             </span></a>
-        <a class="sbOption" href="#section9" id='nb9'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
-            placeholder
-            </span></a>
+
     </div>
     <div class="scroll-container">
 
         <div class="scroll-area" id="section1"></div>
 
-        <div class="scroll-area" id="section2">  
-            <div id="map" class="row">
-                <h5>Mapa</h5>
-                
-            </div>   
+        <div class="scroll-area" id="section2"> 
+            <div id="inputBox">
+                <input type="radio" value="false"  name="map" id="nM" checked><label for="pemp_yes">Normal Map</label>
+                <input type="radio" value="true" name="map" id="aM"><label for="pemp_no">Animated Map</label>
+            </div>
+            <div id="normalMap">
+                <div id="map" class="row">
+                    <h5>Mapa</h5>
+                </div> 
+            </div>
+            <div id="animatedMap" class="row">
+                <div id="scrubberMap" data-aos="fade-left"> </div>
+                <form name="scrubberMap" class="scrubber">
+                    <button name="bMap" class="buttonScrubber"></button>
+                    <label style="display: flex; align-items: center;">
+                        <input name="iMap" type=range min=0 max=41 value=0 step=1 style="width: 180px;">
+                        <output name="oMap" style="margin-left: 0.4em;"></output>
+                    </label>
+                </form>
+            </div>  
         </div>
         <div class="scroll-area" id="section3"> 
             <h1 class="sectionTitle" data-aos="fade-left">Targets and Motivation</h1> 
@@ -144,16 +157,7 @@ The Las Vegas strip mass shooting in June 2016 was one of the worst mass shots i
                 </div>
             </div>
         </div> 
-        <div class="scroll-area lc sm" id="section9">
-            <div id="scrubberMap" data-aos="fade-left"> </div>
-            <form name="scrubberMap" class="scrubber">
-                <button name="bMap" class="buttonScrubber"></button>
-                <label style="display: flex; align-items: center;">
-                    <input name="iMap" type=range min=0 max=41 value=0 step=1 style="width: 180px;">
-                    <output name="oMap" style="margin-left: 0.4em;"></output>
-                </label>
-            </form>
-        </div> 
+
 
     </div>
     <div id="buttonSpace"></div>
