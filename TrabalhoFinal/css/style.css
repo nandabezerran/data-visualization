@@ -40,6 +40,32 @@ html {
   text-shadow: 2px 2px black;
 }
 
+#sectionContext {
+  align-items: unset;
+  justify-content: center;
+}
+#sectionContext div {
+  width: 800px;
+  font-size: 1.5rem;
+  top: 0;
+  
+}
+#sectionContext h1{
+  font-size: 3.5rem;
+  text-align: center;
+}
+#sectionContext h5{
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+#sectionContext h3{
+  font-size: 3.0rem;
+  text-align: center;
+}
+#sectionContext h7{
+  font-size: 19px;
+}
 #section1 h5{
   text-align: center;
   font-family: 'Alfa Slab One', cursive;
@@ -47,9 +73,20 @@ html {
   color: rgb(51, 51, 51);
 }
 
+.statisticsCon{
+  display: inline-block;
+  width: 256px;
+  margin-left: 6px;
+  text-align: center;
+  margin-top: 64px;
+}
+
+.statisticsCon h3{
+  color: #d72a30;
+}
 .scroll-container,
 .scroll-area {
-    height: 700px;;
+    height: 700px;
     font-size: 60px;
 }
 
