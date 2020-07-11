@@ -327,35 +327,56 @@ input[type=range]:focus::-ms-fill-upper {
 #scatterText h5{
   text-align: justify; 
   font-family: CNN;
+  color: #E6E6E6;
+  font-family: "Balto", Helvetica, sans-serif;
+  /*line-height: 1.5;*/
+  text-rendering: optimizelegibility;
 }
 
 #fatalitiesText h5{
   text-align: justify; 
   font-family: CNN;
+  color: #E6E6E6;
+  font-family: "Balto", Helvetica, sans-serif;
+  /*line-height: 1.5;*/
+  text-rendering: optimizelegibility;
 }
 
-#scatterText h1{
-    color: #fee5d9;
-
-  font-family: CNN;
+#scatterText h2{
+  color: white;
+  font-family: "Balto", Helvetica, sans-serif;
+  line-height: 1.5;
+  text-rendering: optimizelegibility;
+  font-weight: bold;
 }
 
 #fatalitiesText h1{
-  font-family: CNN;
-  color: #fee5d9;
+  color: white;
+  font-family: "Balto", Helvetica, sans-serif;
+  line-height: 1.5;
+  text-rendering: optimizelegibility;
+  font-weight: bold;
 }
 
 #beeswarm h1{
   font-family: "Publico Headline",serif;
   position: absolute;
-  color: #fee5d9;
   font-weight: bold;
+  color: white;
+  font-family: "Balto", Helvetica, sans-serif;
+  line-height: 1.5;
+  text-rendering: optimizelegibility;
+
 }
 
 #beeswarm h5{
   font-family: "Publico Headline",serif;
   position: absolute;
   text-align: justify; 
-  color: white;
   padding-top: 15%;
+  
+  color: #E6E6E6;
+  font-family: "Balto", Helvetica, sans-serif;
+  /*line-height: 1.5;*/
+  text-rendering: optimizelegibility;
 }
