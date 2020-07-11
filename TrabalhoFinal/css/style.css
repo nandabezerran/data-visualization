@@ -52,11 +52,11 @@ html {
 }
 
 #inputBox{
-  top: 116%;
-  left: 45%;
+  top: -324px;
+  left: 490px;
   font-size: 5px;
   z-index: 1;
-  position: absolute;
+  position: relative;
   font-size: 13px;
   font-family: "Balto", Helvetica, sans-serif;
 }
@@ -159,6 +159,8 @@ html {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
+
 
 #navBB{
   vertical-align: middle !important;
