@@ -155,10 +155,10 @@ html {
 
 
 /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-/*@media screen and (max-height: 450px) {
+@media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
-}*/
+}
 
 
 
@@ -403,22 +403,6 @@ input[type=range]:focus::-ms-fill-upper {
   line-height: 20px;
 }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-
-/*@media screen and (max-width: 1366px) {
-  #scatterText {
-    padding-left: 30%; 
-  }
-}*/
-
-/*@media screen and (min-width: 1367px) {
-  #scatterText {
-    padding-left: 8%; 
-  }
-}*/
 
 #scatterplot{
   float:right;
