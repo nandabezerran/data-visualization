@@ -1,8 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap");
 html {
     background:#1f1e1e;;
 }
+#textC1{
+  font-size:15px;
+  justify-content: center;
+  text-align: justify; 
+  width: 400px;
+  display: inline-block;
+  margin-top: 20px;
+  margin-left: 159px;
+}
+#textC2{
+  font-size: 15px;
+  justify-content: center;
+  text-align: justify;
+  width: 400px;
+  margin-right: 50px;
+  position: absolute;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color:#d72a30;
+
+}
+
+#section1{
+  background-image: url("../img/mass-shootings-bg1.jpg");
+  align-items: center;
+  justify-content: center;
+
+}
+
+#section1 h1{
+  color:#7a0206ea;
+  font-family: 'Alfa Slab One', cursive;
+  font-size: 4.5rem;
+}
+
+#section1 h5{
+  text-align: center;
+  font-family: 'Alfa Slab One', cursive;
+  font-size: 2.0rem;
+  color: rgb(51, 51, 51);
+}
+
 .scroll-container,
 .scroll-area {
     height: 700px;;
