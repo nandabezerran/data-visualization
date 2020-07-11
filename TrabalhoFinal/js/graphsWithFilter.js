@@ -1,5 +1,6 @@
 let chart1 = dc.rowChart("#chart1");
 let chart2 = dc.rowChart("#chart2");
+let chart = null;
 let reds = d3.schemeReds[7];
 let auxMap = d3.map();
 let states;
@@ -7,7 +8,7 @@ let width = 400;
 let dataMap;
 let dataset;
 let widthPc = 500;
-let heightPc = 456;
+let heightPc = 900;
 
 function dataMapCallback(data){
     let rateMap = d3.map()
@@ -37,9 +38,6 @@ function datasetCallback(data){
         r.Year = r.Date.slice(-4);
         let obj = {};
         obj["Year"] = r.Year;
-        obj["Target"] = r.Target;
-        obj["Cause"] = r.Cause;
-        obj["State"] = r.State;
         if(r.Race == 'Asian American' || r.Race == 'Asian'){
             obj["Race"] = "Asian";
         }else if(r.Race == 'Black' || r.Race  == 'Black American or African American') { 
@@ -94,7 +92,6 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             let idDimension = facts.dimension(d => d.Id);
             let idGrouping = idDimension.group();
             
-            let races = ["Asian", "White", "Black", "Others", "Unknown"]; 
             let nested_data = d3.nest()
             .key(function(e) {if(e.Race == 'Asian American' || e.Race == 'Asian'){return 'Asian'}
                              else if(e.Race == 'Black' || e.Race == 'Black American or African American'){return 'Black'}
@@ -115,7 +112,7 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             
             let marginPie = 40;
             
-            let radius = Math.min(width, 500) / 2 - marginPie;
+            let radius = widthPc/ 2 - marginPie;
             
             let biggerArc = d3.arc().outerRadius(radius - 110).innerRadius(radius - 20);
             
@@ -159,18 +156,11 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                     fillOpacity: 0.7
                 };
             }  
-            function resetFiltersDc() {
-                data = filterRaceData('all');
-                dc.filterAll();   
-                dc.redrawAll();
-                hideButton()
-            }
             function hideButton() {
                 const t = d3.select("#buttonReset");
                 t.classed("hidden", true);
             }
             function showButton() {
-                console.log('entrou dc');
                 const t = d3.select("#buttonReset");
                 console.log(t)
                 t.classed("hidden", false);
@@ -195,10 +185,6 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                 showButton();
 
             }              
-
-            function getKeyByValue(object, value) {
-                return Object.keys(object).find(key => object[key] === value);
-            }
             function getFilteredData() {
                 let ids = idGrouping.all()
                 let todisplay = new Array(ids.length);
@@ -211,21 +197,10 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                   }
                 }
                 todisplay.length = c;
-                let pieData = [];
-                for (const race of races) {
-                  let obj = {};
-                  let filtered = todisplay.filter(s => {
-                    if (s.Race == race ) {
-                      return true;
-                    }
-                    return false;
-                  });
-                  if(filtered.length > 0){
-                    obj["key"] = race;
-                    obj["value"] = filtered.length;
-                    pieData.push(obj);
-                  }
-                }
+                let pieData = d3.nest()
+                    .key(e => e.Race)
+                    .rollup(d => d3.sum(d, function(e) {return 1}))
+                    .entries(todisplay)
                 pieData.sort((a,b) => a.value - b.value); 
                 return pieData;
             }
@@ -250,7 +225,6 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             //Defining GeoJson
             function highlightFeature(e) {
                 let layer = e.target;
-                //console.log(e.target)
             
                 layer.setStyle({
                 weight: 5,
@@ -332,7 +306,7 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             }).addTo(map)
             //Configuring graphs
             console.log(data);
-            chart1.width(400)
+            chart1.width(1200)
                 .height(500)
                 .x(causeXscale)
                 .dimension(causeDim)
@@ -346,7 +320,7 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                 updateFiltersDc();
             })
 
-            chart2.width(400)
+            chart2.width(800)
                 .height(500)
                 .x(targetXScale)
                 .dimension(targetDim)

@@ -3,7 +3,7 @@ html {
 }
 .scroll-container,
 .scroll-area {
-    height: 627px;;
+    height: 700px;;
     font-size: 60px;
     
 }
@@ -15,6 +15,10 @@ html {
 
 .scroll-area {
     scroll-snap-align: start;
+}
+
+#pieChart, #genderAge {
+  margin: 100px;
 }
 
 .scroll-container,
@@ -311,6 +315,8 @@ input[type=range]:focus::-ms-fill-upper {
 #name {
   font-weight: bold;
 }
+
+
 
 #tooltip p {
   color: black;

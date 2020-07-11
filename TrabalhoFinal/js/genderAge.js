@@ -78,7 +78,7 @@ function ready([dataset]){
 
     let distinctAges = [...new Set(data.map(x => x.Age))].sort().reverse();
     let margin = ({top: 40, right: 150, bottom: 20, left: 100})
-    let width = 500;
+    let width = 900;
     let height = (distinctAges.length) * 33 + margin.top + margin.bottom;
     let svg = d3.select("#genderAge").append("svg")
                 .attr("width", width)
