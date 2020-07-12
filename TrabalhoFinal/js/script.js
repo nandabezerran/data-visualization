@@ -4,7 +4,7 @@ AOS.init();
 
 //SideNavBar
 
-let size = 8;
+let size = 9;
 let sectionSize = 627;
 let changeSection = sectionSize/2;
 let sections = [];

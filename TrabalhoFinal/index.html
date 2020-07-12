@@ -38,27 +38,30 @@
         <a class="sbOption" href="#sectionContext" id='nb2'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
             Context
             </span></a>
-        <a class="sbOption" href="#section2" id='nb3'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
-            Map
+        <a class="sbOption" href="#section8" id='nb3'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            Cases Over The Years
             </span></a>
-        <a class="sbOption" href="#section3" id='nb4'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
-            Target and Causes
+        <a class="sbOption" href="#section2" id='nb4'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            States's Statistics
             </span></a>
-        <a class="sbOption" href="#section4" id='nb5'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+        <a class="sbOption" href="#section3" id='nb5'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            Target and Motivations
+            </span></a>
+        <a class="sbOption" href="#section4" id='nb6'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
             Shooter's Profile
             </span></a>
-        <a class="sbOption" href="#section5" id='nb6'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
-            Beeswarm
-            </span></a>
         <a class="sbOption" href="#section6" id='nb7'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
-            Stacked Bar
+            Number of Victims
             </span></a>
         <a class="sbOption" href="#section7" id='nb8'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
-            ScatterPlot
+            Comparing the Numbers
             </span></a>
-        <a class="sbOption" href="#section8" id='nb9'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
-            Line Chart
+        <a class="sbOption" href="#section5" id='nb9'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            Understanding each case
             </span></a>
+
+
+
 
     </div>
     <div class="scroll-container">
@@ -97,6 +100,33 @@
                     </span>
             </div>
         </div>
+        <div class="scroll-area" id="section8">
+            <h1 class="sectionTitle" data-aos="fade-up" data-aos-duration="1000" >Cases over the years</h1>
+            <div id="chartAndScrubber">
+                <div id="line-chart" data-aos="fade-right"></div>
+                <form name="scrubberLine" class="scrubber">
+                    <button name="b" class="buttonScrubber"></button>
+                    <label style="display: flex; align-items: center;">
+                        <input name="i" type=range min=0 max=41 value=0 step=1 style="width: 180px;">
+                        <output name="o" style="margin-left: 0.4em;"></output>
+                    </label>
+                </form>
+            </div>
+            <div id="statistics" data-aos="fade-right">
+                <div class="statsBox" data-aos="fade-up" data-aos-duration="1000">
+                    <h2 id="numberOfCases"></h2>
+                    <h4>Total of occurences</h4>
+                </div>
+                <div class="statsBox" data-aos="fade-up" data-aos-duration="1000">
+                    <h2 id="numberOfFatalities"></h2>
+                    <h4>Total of fatalities<h4>
+                </div>
+                <div class="statsBox" data-aos="fade-up" data-aos-duration="1000">
+                    <h2 id="numberOfInjured"></h2>
+                    <h4>Total of injured</h4>
+                </div>
+            </div>
+        </div> 
         <div class="scroll-area" id="section2"> 
             <div id="inputBox" data-aos="zoom-in" data-aos-duration="2000">
                 <input type="radio" value="false"  name="map" id="nM" checked><label for="pemp_yes">Normal Map</label>
@@ -135,15 +165,6 @@
             <h1 class="sectionTitle" data-aos="fade-left">Shooter's Profile</h1>
             <div id="pieChart" data-aos="fade-left"> </div>
             <div id="genderAge" data-aos="fade-right"></div>
-        </div>
-        <div class="scroll-area" id="section5">
-            <div id="beeswarm" data-aos="fade-right"> 
-                    <div class="col-7">
-
-                    <h1>Number of Victims</h1>
-                    <h5>Of the 316 registered cases, 192 occurred between 2011 and 2017, corresponding to 60.7% of the total number of cases. Of these 192, 132 occurred between 2015 and 2016, corresponding to 68.75%.<br>Each circle represents a shooting, click on the circle to access the news of that case!</h5>
-                    </div>
-            </div> 
         </div>  
         <div class="scroll-area" id="section6"> 
             <div class="col-4">
@@ -172,33 +193,16 @@ The Las Vegas strip mass shooting in June 2016 was one of the worst mass shots i
             </div>
 
         </div>  
-        <div class="scroll-area" id="section8">
-            <h1 class="sectionTitle" data-aos="fade-up" data-aos-duration="1000" >Cases over the years</h1>
-            <div id="chartAndScrubber">
-                <div id="line-chart" data-aos="fade-right"></div>
-                <form name="scrubberLine" class="scrubber">
-                    <button name="b" class="buttonScrubber"></button>
-                    <label style="display: flex; align-items: center;">
-                        <input name="i" type=range min=0 max=41 value=0 step=1 style="width: 180px;">
-                        <output name="o" style="margin-left: 0.4em;"></output>
-                    </label>
-                </form>
-            </div>
-            <div id="statistics" data-aos="fade-right">
-                <div class="statsBox" data-aos="fade-up" data-aos-duration="1000">
-                    <h2 id="numberOfCases"></h2>
-                    <h4>Total of occurences</h4>
-                </div>
-                <div class="statsBox" data-aos="fade-up" data-aos-duration="1000">
-                    <h2 id="numberOfFatalities"></h2>
-                    <h4>Total of fatalities<h4>
-                </div>
-                <div class="statsBox" data-aos="fade-up" data-aos-duration="1000">
-                    <h2 id="numberOfInjured"></h2>
-                    <h4>Total of injured</h4>
-                </div>
-            </div>
-        </div> 
+        <div class="scroll-area" id="section5">
+            <div id="beeswarm" data-aos="fade-right"> 
+                    <div class="col-7">
+
+                    <h1>Number of Victims</h1>
+                    <h5>Of the 316 registered cases, 192 occurred between 2011 and 2017, corresponding to 60.7% of the total number of cases. Of these 192, 132 occurred between 2015 and 2016, corresponding to 68.75%.<br>Each circle represents a shooting, click on the circle to access the news of that case!</h5>
+                    </div>
+            </div> 
+        </div>
+
 
 
     </div>
