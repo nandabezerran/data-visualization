@@ -1,6 +1,6 @@
 ## Link for the final project of the discipline
 
-[U.S Mass Shootings Statistics](TrabalhoFinal/index.html)<br>
+[U.S Mass Shootings a Visual Analysis](TrabalhoFinal/index.html)<br>
 
 ---
 
