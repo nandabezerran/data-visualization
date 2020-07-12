@@ -827,5 +827,4 @@ function ready([data, statesById, topo]){
     beeswarm(data);
     stackedBar(data);
     scatterplot(data);
-    document.getElementById("meajuda").addEventListener("click", switchDivs, false);
 }
