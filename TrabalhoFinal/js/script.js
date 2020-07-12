@@ -341,7 +341,7 @@ let lineChart = (lineData) => {
                     .attr("width", 105);
             }
 
-            focus.select("text").text(function() { return "Ano: " + d.key + " | Casos: " + d.value; });
+            focus.select("text").text(function() { return "Year: " + d.key + " | Cases: " + d.value; });
         }
 
         content = svg.append("g")
