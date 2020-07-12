@@ -270,7 +270,7 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             info.update = function (feat) {
                     this._div.innerHTML = '<h5>Number of mass shootings</h5>' +  (feat ?
                         '<b>' + feat.properties.NAME + '</b><br />' + dataMap.get(feat.properties.NAME) + ' accumulated cases'
-                        : 'Mouse over a state');
+                        : 'Mouse over a state. You can click to filter other graphics');
             }
             info.addTo(map);
             //Legend
