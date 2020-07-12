@@ -4,28 +4,6 @@ html {
     background:#1f1e1e;
     font-size: 16px;
 }
-/* #textC1{
-  font-size:15px;
-  justify-content: center;
-  text-align: justify; 
-  width: 400px;
-  display: inline-block;
-  margin-top: 20px;
-  margin-left: 159px;
-}
-#textC2{
-  font-size: 15px;
-  justify-content: center;
-  text-align: justify;
-  width: 400px;
-  margin-right: 50px;
-  position: absolute;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  color:#d72a30;
-
-} */
 
 #section1{
   background-image: url("../img/mass-shootings-bg1.jpg");
@@ -54,24 +32,29 @@ html {
 #sectionContext h1{
   font-size: 3.5rem;
   text-align: center;
+  font-family: 'Alfa Slab One', cursive;
 }
 #sectionContext h5{
   font-size: 1.8rem;
   text-align: center;
+  font-family: "Balto", Helvetica, sans-serif;
 }
 
 #sectionContext h3{
   font-size: 3.0rem;
   text-align: center;
+  font-family: "Balto", Helvetica, sans-serif;
 }
 #sectionContext h7{
   font-size: 19px;
+  font-family: "Balto", Helvetica, sans-serif;
 }
 #section1 h5{
   text-align: center;
   font-family: 'Alfa Slab One', cursive;
   font-size: 2.0rem;
   color: rgb(51, 51, 51);
+  
 }
 
 .statisticsCon{
@@ -85,6 +68,7 @@ html {
 
 .statisticsCon h3{
   color: #d72a30;
+  font-family: "Balto", Helvetica, sans-serif;
 }
 .scroll-container,
 .scroll-area {
@@ -156,6 +140,7 @@ circle{
 }
 #titleTargetMotivation {
   padding-bottom: 10px;
+  font-family: 'Alfa Slab One', cursive;
 }
 
 #section8, #section3, #section4 {
@@ -179,11 +164,13 @@ circle{
 .statsBox h2 {
   color: #D72A30;
   font-weight: bold;
+  font-family: "Balto", Helvetica, sans-serif;
 }
 
 .statsBox h4 {
   color: white;
   font-weight: lighter;
+  font-family: "Balto", Helvetica, sans-serif;
 }
 
 .statsBox:hover {
@@ -196,16 +183,19 @@ circle{
 
 .sectionTitle {
   flex-basis: 100%;
+  font-family: 'Alfa Slab One', cursive;
 }
 
 .sectionTitle h1{
   margin: 0 auto;
+  font-family: 'Alfa Slab One', cursive;
 }
 
 .sectionTitle h5 {
   text-align: justify;
   margin: 0 auto;
-  font-family: Arial;
+  font-family: "Balto", Helvetica, sans-serif;
+
 }
 
 /* The sidebar menu */
@@ -297,6 +287,7 @@ input[type=radio]{
 .info h4 {
   margin: 0 0 5px;
   color: #777;
+  font-family: "Balto", Helvetica, sans-serif;
 }
 
 .legend {
@@ -515,10 +506,9 @@ input[type=range]:focus::-ms-fill-upper {
 #scatterText h2{
   float: left;
   color: white;
-  font-family: "Balto", Helvetica, sans-serif;
+  font-family: 'Alfa Slab One', cursive;
   line-height: 1.5;
   text-rendering: optimizelegibility;
-  font-weight: bold;
 }
 
 /*#stackedBar{
@@ -530,26 +520,23 @@ input[type=range]:focus::-ms-fill-upper {
   font-family: "Balto", Helvetica, sans-serif;
   line-height: 1.5;
   text-rendering: optimizelegibility;
-  font-weight: bold;
+  font-family: 'Alfa Slab One', cursive;
 }
 
 #fatalitiesText h5{
   text-align: justify; 
-  font-family: CNN;
   color: #E6E6E6;
   font-family: "Balto", Helvetica, sans-serif;
   text-rendering: optimizelegibility;
 }
 
 #beeswarm h1{
-  font-family: "Publico Headline",serif;
   position: absolute;
-  font-weight: bold;
   color: white;
-  font-family: "Balto", Helvetica, sans-serif;
   line-height: 1.5;
   text-rendering: optimizelegibility;
   float:none;
+  font-family: 'Alfa Slab One', cursive;
 }
 
 #beeswarm h5{
