@@ -114,6 +114,16 @@ html {
   flex-basis: 100%;
 }
 
+.sectionTitle h1{
+  margin: 0 auto;
+}
+
+.sectionTitle h5 {
+  text-align: justify;
+  margin: 0 auto;
+  font-family: Arial;
+}
+
 /* The sidebar menu */
 
 .sidenav{

@@ -4,11 +4,11 @@ let chart = null;
 let reds = d3.schemeReds[7];
 let auxMap = d3.map();
 let states;
-let width = 400;
+let width = 500;
 let dataMap;
 let dataset;
-let widthPc = 500;
-let heightPc = 500;
+let widthPc = 350;
+let heightPc = 350;
 
 function dataMapCallback(data){
     let rateMap = d3.map()
@@ -110,7 +110,7 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                         .sort(null)
                         .value(d => d.value);
             
-            let marginPie = 40;
+            let marginPie = 10;
             
             let radius = widthPc/ 2 - marginPie;
             
@@ -118,13 +118,14 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
             
             let normalArc = d3.arc().outerRadius(radius - 30).innerRadius(radius - 100);
 
+            let width = 400;
             let targetXScale = d3.scaleLinear()
                                  .domain([0, 25])
-                                 .range([0, width - 100])
+                                 .range([0, width])
             
             let causeXscale = d3.scaleLinear()
                                  .domain([0, 30])
-                                 .range([0, width - 100])
+                                 .range([0, width])
             
             let format = d3.format(".2f");
                         d3.select('#buttonReset').remove()
@@ -305,8 +306,8 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                 onEachFeature: onEachFeature
             }).addTo(map)
             //Configuring graphs
-            chart1.width(1200)
-                .height(500)
+            chart1.width(width)
+                .height(400)
                 .x(causeXscale)
                 .dimension(causeDim)
                 .group(causeGroup)
@@ -319,8 +320,8 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                 updateFiltersDc();
             })
 
-            chart2.width(800)
-                .height(500)
+            chart2.width(width)
+                .height(400)
                 .x(targetXScale)
                 .dimension(targetDim)
                 .group(targetGroup)
