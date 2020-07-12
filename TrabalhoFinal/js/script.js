@@ -6,7 +6,7 @@ AOS.init();
 
 let size = 9;
 let sectionSize = 627;
-let changeSection = sectionSize/2;
+let changeSection = 325;
 let sections = [];
 let scrollPosition = [];
 function dividingSections(size, changeSection){
