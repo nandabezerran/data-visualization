@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap");
 html {
-    background:#1f1e1e;;
+    background:#1f1e1e;
+    font-size: 16px;
 }
-#textC1{
+/* #textC1{
   font-size:15px;
   justify-content: center;
   text-align: justify; 
@@ -24,7 +25,7 @@ html {
   right: 0;
   color:#d72a30;
 
-}
+} */
 
 #section1{
   background-image: url("../img/mass-shootings-bg1.jpg");
@@ -91,21 +92,17 @@ html {
 }
 
 .scroll-container {
-
     scroll-snap-type: y mandatory;
 }
 
 .scroll-area {
     scroll-snap-align: start;
 }
-#genderAge {
-  margin-right: -70px;
-  margin-left: 50px;
-} 
 
 .scroll-container,
 .scroll-area {
     margin: 0 auto;
+
 }
 
 .scroll-area {
@@ -154,17 +151,18 @@ html {
   flex-direction: column;
 }
 
-#statistics p {
-  line-height: 80px;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-  font-family: 'Roboto';
-  color: black;
+@media only screen and (max-width: 1160px) {
+  #statistics {
+    margin-left: 0;
+    flex-direction: row;
+  }
+  .statsBox {
+    padding: 20px;
+  }
 }
 
-.statsBox span {
-  font-size: 25px;
+#titleTargetMotivation {
+  padding-bottom: 10px;
 }
 
 #section8, #section3, #section4 {
@@ -173,14 +171,17 @@ html {
 }
 
 .statsBox {
-  border-radius: 20px;
-  width: 220px;
-  height: 100px;
-  margin-bottom: 70px;
-  padding: 10px;
-  background-color: white;
-  opacity: 75%;
-  box-shadow: 0px 0px 10px 1px red;
+  padding: 40px;
+}
+
+.statsBox h2 {
+  color: #D72A30;
+  font-weight: bold;
+}
+
+.statsBox h4 {
+  color: white;
+  font-weight: lighter;
 }
 
 .statsBox:hover {

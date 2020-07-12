@@ -110,9 +110,9 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                         .sort(null)
                         .value(d => d.value);
             
-            let marginPie = 10;
+            let marginPie = 20;
             
-            let radius = widthPc/ 2 - marginPie;
+            let radius = widthPc/ 2;
             
             let biggerArc = d3.arc().outerRadius(radius - 110).innerRadius(radius - 20);
             
