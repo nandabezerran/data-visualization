@@ -151,16 +151,6 @@ html {
   margin-left: 5%;
   flex-direction: column;
 }
-
-@media only screen and (max-width: 1160px) {
-  #statistics {
-    margin-left: 0;
-    flex-direction: row;
-  }
-  .statsBox {
-    padding: 20px;
-  }
-}
 circle{
   cursor:pointer;
 }
@@ -175,6 +165,15 @@ circle{
 
 .statsBox {
   padding: 40px;
+}
+
+@media only screen and (max-width: 1160px) {
+  #statistics {
+    margin-left: -20px;
+  }
+  .statsBox {
+    padding: 20px;
+  }
 }
 
 .statsBox h2 {
