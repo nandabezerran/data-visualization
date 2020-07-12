@@ -268,9 +268,9 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                 return this._div;
             }
             info.update = function (feat) {
-                    this._div.innerHTML = '<h5>Número de tiroteios em massa</h5>' +  (feat ?
-                        '<b>' + feat.properties.NAME + '</b><br />' + dataMap.get(feat.properties.NAME) + ' casos acumulados'
-                        : 'Passe o mouse sobre um estado');
+                    this._div.innerHTML = '<h5>Number of mass shootings</h5>' +  (feat ?
+                        '<b>' + feat.properties.NAME + '</b><br />' + dataMap.get(feat.properties.NAME) + ' accumulated cases'
+                        : 'Mouse over a state');
             }
             info.addTo(map);
             //Legend

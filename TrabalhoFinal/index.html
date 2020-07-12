@@ -33,47 +33,81 @@
 <body>
     <div class="sidenav" id="sidenav">
         <a class="sbOption" href="#section1" id='nb1'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
-            Statistics
+            Intro
             </span></a>
-        <a class="sbOption" href="#section2" id='nb2'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+        <a class="sbOption" href="#sectionContext" id='nb2'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+            Context
+            </span></a>
+        <a class="sbOption" href="#section2" id='nb3'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
             Map
             </span></a>
-        <a class="sbOption" href="#section3" id='nb3'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+        <a class="sbOption" href="#section3" id='nb4'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
             Target and Causes
             </span></a>
-        <a class="sbOption" href="#section4" id='nb4'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+        <a class="sbOption" href="#section4" id='nb5'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
             Shooter's Profile
             </span></a>
-        <a class="sbOption" href="#section5" id='nb5'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+        <a class="sbOption" href="#section5" id='nb6'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
             Beeswarm
             </span></a>
-        <a class="sbOption" href="#section6" id='nb6'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+        <a class="sbOption" href="#section6" id='nb7'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
             Stacked Bar
             </span></a>
-        <a class="sbOption" href="#section7" id='nb7'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+        <a class="sbOption" href="#section7" id='nb8'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
             ScatterPlot
             </span></a>
-        <a class="sbOption" href="#section8" id='nb8'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
+        <a class="sbOption" href="#section8" id='nb9'><i class="material-icons" id="navBB">fiber_manual_record</i> <span>
             Line Chart
             </span></a>
 
     </div>
     <div class="scroll-container">
 
-        <div class="scroll-area" id="section1"></div>
+        <div class="scroll-area" id="section1">
+            <div>
+                <h1>U.S Mass Shootings</h1>
+                <h5>The statistics of a terrifying normalcy</h5>
+            </div>
+        </div>
 
+        <div class="scroll-area" id="sectionContext">
+            <div data-aos="fade-down" data-aos-duration="1000">
+                <h1>What is mass shooting? </h1>
+                <h5>Mass shootings are defined by studies as having four or more victims and don't include 
+                    gang killings or slayings that involve the death of multiple family members.
+                </br>
+                    When it comes to that topic, the United States is tragically exceptional: there are more public
+                    mass shootings in the United States than in any other country in the world, according to several studies </h5>
+                </br>
+                    <h3>The U.S have: </h3>
+                    <span class="statisticsCon" data-aos="fade-up"
+                    data-aos-duration="3000">
+                        <h3>4.4%</h3>
+                        <h7>of the global population</h7>  
+                    </span> 
+                    <span class="statisticsCon"data-aos="fade-up"
+                    data-aos-duration="3000">
+                       <h3>42%</h3> 
+                       <h7>of the world’s guns</h7>
+                    </span>
+                    <span class="statisticsCon"data-aos="fade-up"
+                    data-aos-duration="2000"> 
+                        <h3>31%</h3> 
+                        <h7>of worldwide mass shooters</h7>
+                    </span>
+            </div>
+        </div>
         <div class="scroll-area" id="section2"> 
-            <div id="inputBox">
+            <div id="inputBox" data-aos="zoom-in" data-aos-duration="2000">
                 <input type="radio" value="false"  name="map" id="nM" checked><label for="pemp_yes">Normal Map</label>
                 <input type="radio" value="true" name="map" id="aM"><label for="pemp_no">Animated Map</label>
             </div>
-            <div id="normalMap">
+            <div id="normalMap" data-aos="zoom-in" data-aos-duration="2000">
                 <div id="map" class="row">
-                    <h5>Mapa</h5>
                 </div> 
             </div>
             <div id="animatedMap" class="row">
-                <div id="scrubberMap" data-aos="fade-left"> </div>
+                <div id="scrubberMap"> </div>
                 <form name="scrubberMap" class="scrubber">
                     <button name="bMap" class="buttonScrubber"></button>
                     <label style="display: flex; align-items: center;">
@@ -107,7 +141,7 @@
                     <div class="col-7">
 
                     <h1>Number of Victims</h1>
-                    <h5>Studies indicate that the rate at which public mass shootings occur has tripled since 2011. Between 1982 and 2011, a mass shooting occurred roughly once every 200 days. However, between 2011 and 2014, that rate has accelerated greatly with at least one mass shooting occurring every 64 days in the United States.<br>Each circle represents a shooting, click on the circle to access the news of that case!</h5>
+                    <h5>Of the 316 registered cases, 192 occurred between 2011 and 2017, corresponding to 60.7% of the total number of cases. Of these 192, 132 occurred between 2015 and 2016, corresponding to 68.75%.<br>Each circle represents a shooting, click on the circle to access the news of that case!</h5>
                     </div>
             </div> 
         </div>  
@@ -124,12 +158,12 @@
             </div>
         </div>      
         <div class="scroll-area" id="section7"> <!--<div id="scatterplot" data-aos="fade-right"></div>-->              
-            <div class="col-6">
+            <div class="col-7">
                 
                 <div id="scatterplot" data-aos="fade-right">
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <div id ='scatterText' data-aos="fade-up">
                     <h2>Comparing the numbers</h2>
                     <h5>This chart can help you to compare the number of occurrences, victims and fatalities of each state. Each circle represents a state, the larger the circle the greater the number of deaths.<br>

@@ -1,11 +1,92 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap");
 html {
     background:#1f1e1e;;
 }
+#textC1{
+  font-size:15px;
+  justify-content: center;
+  text-align: justify; 
+  width: 400px;
+  display: inline-block;
+  margin-top: 20px;
+  margin-left: 159px;
+}
+#textC2{
+  font-size: 15px;
+  justify-content: center;
+  text-align: justify;
+  width: 400px;
+  margin-right: 50px;
+  position: absolute;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color:#d72a30;
+
+}
+
+#section1{
+  background-image: url("../img/mass-shootings-bg1.jpg");
+  align-items: center;
+  justify-content: center;
+
+}
+
+#section1 h1{
+  color:#7a0206ea;
+  font-family: 'Alfa Slab One', cursive;
+  font-size: 4.5rem;
+  text-shadow: 2px 2px black;
+}
+
+#sectionContext {
+  align-items: unset;
+  justify-content: center;
+}
+#sectionContext div {
+  width: 800px;
+  font-size: 1.5rem;
+  top: 0;
+  
+}
+#sectionContext h1{
+  font-size: 3.5rem;
+  text-align: center;
+}
+#sectionContext h5{
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+#sectionContext h3{
+  font-size: 3.0rem;
+  text-align: center;
+}
+#sectionContext h7{
+  font-size: 19px;
+}
+#section1 h5{
+  text-align: center;
+  font-family: 'Alfa Slab One', cursive;
+  font-size: 2.0rem;
+  color: rgb(51, 51, 51);
+}
+
+.statisticsCon{
+  display: inline-block;
+  width: 256px;
+  margin-left: 6px;
+  text-align: center;
+  margin-top: 64px;
+}
+
+.statisticsCon h3{
+  color: #d72a30;
+}
 .scroll-container,
 .scroll-area {
-    height: 700px;;
+    height: 700px;
     font-size: 60px;
 }
 
@@ -52,11 +133,11 @@ html {
 }
 
 #inputBox{
-  top: 116%;
-  left: 45%;
+  top: -324px;
+  left: 490px;
   font-size: 5px;
   z-index: 1;
-  position: absolute;
+  position: relative;
   font-size: 13px;
   font-family: "Balto", Helvetica, sans-serif;
 }
@@ -169,6 +250,8 @@ html {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
+
 
 #navBB{
   vertical-align: middle !important;
@@ -411,20 +494,13 @@ input[type=range]:focus::-ms-fill-upper {
   line-height: 20px;
 }
 
-#scatterText {
-  padding-left: 8%; 
+
+#scatterplot{
+  float:right;
 }
 
 #scatterText h5{
-  text-align: justify; 
-  font-family: CNN;
-  color: #E6E6E6;
-  font-family: "Balto", Helvetica, sans-serif;
-  /*line-height: 1.5;*/
-  text-rendering: optimizelegibility;
-}
-
-#fatalitiesText h5{
+  float: left;
   text-align: justify; 
   font-family: CNN;
   color: #E6E6E6;
@@ -434,6 +510,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 #scatterText h2{
+  float: left;
   color: white;
   font-family: "Balto", Helvetica, sans-serif;
   line-height: 1.5;
@@ -441,12 +518,24 @@ input[type=range]:focus::-ms-fill-upper {
   font-weight: bold;
 }
 
+/*#stackedBar{
+  float:right;
+}*/
+
 #fatalitiesText h1{
   color: white;
   font-family: "Balto", Helvetica, sans-serif;
   line-height: 1.5;
   text-rendering: optimizelegibility;
   font-weight: bold;
+}
+
+#fatalitiesText h5{
+  text-align: justify; 
+  font-family: CNN;
+  color: #E6E6E6;
+  font-family: "Balto", Helvetica, sans-serif;
+  text-rendering: optimizelegibility;
 }
 
 #beeswarm h1{
@@ -457,7 +546,7 @@ input[type=range]:focus::-ms-fill-upper {
   font-family: "Balto", Helvetica, sans-serif;
   line-height: 1.5;
   text-rendering: optimizelegibility;
-
+  float:none;
 }
 
 #beeswarm h5{
@@ -465,7 +554,6 @@ input[type=range]:focus::-ms-fill-upper {
   position: absolute;
   text-align: justify; 
   padding-top: 15%;
-  
   color: #E6E6E6;
   font-family: "Balto", Helvetica, sans-serif;
   /*line-height: 1.5;*/
