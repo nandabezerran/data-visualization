@@ -80,6 +80,7 @@ html {
   margin-left: 6px;
   text-align: center;
   margin-top: 64px;
+  text-shadow: 2px 2px black;
 }
 
 .statisticsCon h3{
@@ -227,7 +228,7 @@ circle{
   font-size: 15px;
   color: #d72a30;
   display: block;
-  font-family:'Impact'
+  font-family: 'Alfa Slab One', cursive;
 }
 .sidenav > a > span {
   display:none;
