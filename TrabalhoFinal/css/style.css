@@ -160,7 +160,9 @@ html {
     padding: 20px;
   }
 }
-
+circle{
+  cursor:pointer;
+}
 #titleTargetMotivation {
   padding-bottom: 10px;
 }
