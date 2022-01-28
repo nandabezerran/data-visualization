@@ -2,7 +2,7 @@ let chart1 = dc.rowChart("#chart1");
 let chart2 = dc.rowChart("#chart2");
 let chart = null;
 let reds = d3.schemeReds[7];
-//let auxMap = d3.map();
+let auxMap = d3.map();
 let states;
 let width = 500;
 let dataMap;
@@ -10,28 +10,28 @@ let dataset;
 let widthPc = 350;
 let heightPc = 350;
 
-// function dataMapCallback(data){
-//     let rateMap = d3.map()
-//                 data.forEach(function(d) {
-//                     if(rateMap.get(d.State) == undefined){
-//                     rateMap.set(d.State, 1)
-//                     }else{
-//                     rateMap.set(d.State, rateMap.get(d.State) + 1)
-//                     }
-//                 })
-//     return rateMap
-// }
+function dataMapCallback(data){
+    let rateMap = d3.map()
+                data.forEach(function(d) {
+                    if(rateMap.get(d.State) == undefined){
+                    rateMap.set(d.State, 1)
+                    }else{
+                    rateMap.set(d.State, rateMap.get(d.State) + 1)
+                    }
+                })
+    return rateMap
+}
 
-// function statesCallback(data, rateMap){
-//     data.features.forEach(d => {
-//     if(rateMap.get(d.properties.NAME) == undefined){
-//         rateMap.set(d.properties.NAME, 0)
-//     }
-//     d.properties.cases = rateMap.get(d.properties.NAME)
-//     })
+function statesCallback(data, rateMap){
+    data.features.forEach(d => {
+    if(rateMap.get(d.properties.NAME) == undefined){
+        rateMap.set(d.properties.NAME, 0)
+    }
+    d.properties.cases = rateMap.get(d.properties.NAME)
+    })
 
-//     return data   
-// }
+    return data   
+}
 
 function datasetCallback(data){
     data.forEach(function(r) {
@@ -76,13 +76,13 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                                   .domain([0, 20])
                                   .range(reds);
             
-            // let map = L.map('map').setView([39.3937622,-100.6949527], 4);
-            //     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-            //       attribution: `&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>,
-            //    Map tiles by &copy; <a href="https://carto.com/attribution">CARTO</a>`,
-            //       maxZoom: 18
-            //   }).addTo(map)
-            //     L.geoJson().addTo(map);
+            let map = L.map('map').setView([39.3937622,-100.6949527], 4);
+                L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+                  attribution: `&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>,
+               Map tiles by &copy; <a href="https://carto.com/attribution">CARTO</a>`,
+                  maxZoom: 18
+              }).addTo(map)
+                L.geoJson().addTo(map);
             
             let stateDim = facts.dimension(d => d.State);
             let causeDim = facts.dimension(d => d.Cause);
@@ -299,12 +299,12 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                 div.innerHTML = labels.join('<br>')
                 return div
             }
-            //legend.addTo(map)
+            legend.addTo(map)
             
-            // geojson = L.geoJson(states, {
-            //     style: style,
-            //     onEachFeature: onEachFeature
-            // }).addTo(map)
+            geojson = L.geoJson(states, {
+                style: style,
+                onEachFeature: onEachFeature
+            }).addTo(map)
             //Configuring graphs
             chart1.width(width)
                 .height(400)
