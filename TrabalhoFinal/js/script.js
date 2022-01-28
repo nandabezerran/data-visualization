@@ -62,14 +62,14 @@ let promises = [
         })
         return data
      }),
-    // d3.csv("https://gist.githubusercontent.com/thaisnl/4ac24ac0f006e24e38dcc814c04bbefe/raw/92d4359a14d75113091a3f8fb8a3fdbb004d8f81/states.csv").then(function (data) {
-    //     let nameMap = d3.map();
-    //     console.log(nameMap);
-    //     data.forEach(function(d) {
-    //         nameMap.set(d.st, d.stname)
-    //     })
-    //     return nameMap
-    // }),
+    d3.csv("https://gist.githubusercontent.com/thaisnl/4ac24ac0f006e24e38dcc814c04bbefe/raw/92d4359a14d75113091a3f8fb8a3fdbb004d8f81/states.csv").then(function (data) {
+        let nameMap = d3.map();
+        console.log(nameMap);
+        data.forEach(function(d) {
+            nameMap.set(d.st, d.stname)
+        })
+        return nameMap
+    }),
     d3.json("https://d3js.org/us-10m.v1.json")
 ]
 
@@ -664,126 +664,126 @@ function scatterplot(data){
 let mapYear = new Object({year: 1966})
 
 //map with scrubber
-// let proxyMap = new Proxy(objYear, {
-//     set: function (target, key, value) {
-//         casesById = dataAt(value);
-//         chartSM.update(casesById)
-//         target[key] = value;
-//         return true;
-//     }
-// });
+let proxyMap = new Proxy(objYear, {
+    set: function (target, key, value) {
+        casesById = dataAt(value);
+        chartSM.update(casesById)
+        target[key] = value;
+        return true;
+    }
+});
 
-// let showTooltip = (county_id, x, y) => {
-//     const offset = 30;
-//     const t = d3.select("#tooltip");
-//     t.select("#casos").text(casesById.get(county_id));
-//     t.select("#name").text(nameById.get(county_id));
-//     t.classed("hidden", false);
-//     const rect = t.node().getBoundingClientRect();
-//     const w = rect.width;
-//     const h = rect.height;
-//     if (x + offset + w > widthSM) {
-//       x = x - w;
-//     }
-//     t.style("left", x + offset + "px");
-//     t.style("top", y - h + "px");
-// }
+let showTooltip = (county_id, x, y) => {
+    const offset = 30;
+    const t = d3.select("#tooltip");
+    t.select("#casos").text(casesById.get(county_id));
+    t.select("#name").text(nameById.get(county_id));
+    t.classed("hidden", false);
+    const rect = t.node().getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
+    if (x + offset + w > widthSM) {
+      x = x - w;
+    }
+    t.style("left", x + offset + "px");
+    t.style("top", y - h + "px");
+}
 
-// let hideTooltip = () => {
-//     d3.select("#tooltip")
-//     .classed("hidden", true)
-// }
+let hideTooltip = () => {
+    d3.select("#tooltip")
+    .classed("hidden", true)
+}
 
-// let dataAt = (year) => {
-//     let cases = d3.map();
-//     for ( const [id, name] of Object.entries(nameById)) {
-//         let filtered = aux.filter(s => {
-//             if (s.State == name && s.Year == year) {
-//                 return true;
-//             }
-//             return false;
-//         });  
-//         cases.set(id.substr(1), +filtered.length);
-//     }
-//     return cases;
-// }
+let dataAt = (year) => {
+    let cases = d3.map();
+    for ( const [id, name] of Object.entries(nameById)) {
+        let filtered = aux.filter(s => {
+            if (s.State == name && s.Year == year) {
+                return true;
+            }
+            return false;
+        });
+        cases.set(id.substr(1), +filtered.length);
+    }
+    return cases;
+}
 
-// let returnMaxValue = (data) => {
-//     //gambiarra pra nao ficar a escala de 0,0 pq os 0 fica com a cor mais escura
-//     if(Math.max(...data.values()) == 0){
-//       return 1;
-//     }
-//     return Math.max(...data.values());
-// }
+let returnMaxValue = (data) => {
+    //gambiarra pra nao ficar a escala de 0,0 pq os 0 fica com a cor mais escura
+    if(Math.max(...data.values()) == 0){
+      return 1;
+    }
+    return Math.max(...data.values());
+}
 
-// const widthSM = 960;
-// const heightSM = 600;
-// let casesById = null;
+const widthSM = 960;
+const heightSM = 600;
+let casesById = null;
 
-// let scrubberMap = (data) => {
+let scrubberMap = (data) => {
 
-//     d3.select("body")
-//       .append("div")
-//       .attr("id", "tooltip")
-//       .attr("class", "hidden")
-//       .append("p")
-//       .html("<span id='name'></span><br>Qtde de casos: <span id='casos'></span>")
+    d3.select("body")
+      .append("div")
+      .attr("id", "tooltip")
+      .attr("class", "hidden")
+      .append("p")
+      .html("<span id='name'></span><br>Qtde de casos: <span id='casos'></span>")
 
-//     let path = d3.geoPath();
-//     let states = null;
+    let path = d3.geoPath();
+    let states = null;
 
-//     let colorScale = d3.scaleQuantize()
-//                 .domain([0, returnMaxValue(data)])
-//                 .range(d3.schemeReds[8]);
+    let colorScale = d3.scaleQuantize()
+                .domain([0, returnMaxValue(data)])
+                .range(d3.schemeReds[8]);
 
-//     const svg = d3.select("#scrubberMap").append("svg")
-//                     .attr('width', widthSM )
-//                     .attr('height', heightSM)
+    const svg = d3.select("#scrubberMap").append("svg")
+                    .attr('width', widthSM )
+                    .attr('height', heightSM)
 
-//     svg.append("path")
-//         .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-//         .attr("class", "states")
-//         .attr("d", path)
+    svg.append("path")
+        .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+        .attr("class", "states")
+        .attr("d", path)
 
-//     chartSM = Object.assign(svg.node(), {
-//         update(newdata) {
-//             if(states != null){
-//                 states.remove();
-//             }
-//             colorScale = d3.scaleQuantize()
-//                 .domain([0, returnMaxValue(newdata)])
-//                 .range(d3.schemeReds[8]);
-//             states = svg.append("g")
-//                 .attr("class", "states")
-//                 .selectAll("path")
-//                 .data(topojson.feature(us, us.objects.states).features)
-//                 .enter().append("path")
-//                 .attr("fill", d => colorScale(newdata.get(d.id)))
-//                 .attr("d", path)
-//                 .on("mouseover", function(d){
-//                     d3.select(this) 
-//                     .style("cursor", "pointer")
-//                     .attr("stroke-width", 3)
-//                     .attr("stroke","#000");
-//                     const rect = this.getBoundingClientRect();
-//                     showTooltip(d.id, rect.x + window.scrollX, rect.y + window.scrollY);
-//                 })
-//                 .on("mouseout", function(d){
-//                     d3.select(this)
-//                     .style("cursor", "default")
-//                     .attr("stroke-width", 0)
-//                     .attr("stroke","none");
-//                     hideTooltip();
-//                 })
+    chartSM = Object.assign(svg.node(), {
+        update(newdata) {
+            if(states != null){
+                states.remove();
+            }
+            colorScale = d3.scaleQuantize()
+                .domain([0, returnMaxValue(newdata)])
+                .range(d3.schemeReds[8]);
+            states = svg.append("g")
+                .attr("class", "states")
+                .selectAll("path")
+                .data(topojson.feature(us, us.objects.states).features)
+                .enter().append("path")
+                .attr("fill", d => colorScale(newdata.get(d.id)))
+                .attr("d", path)
+                .on("mouseover", function(d){
+                    d3.select(this)
+                    .style("cursor", "pointer")
+                    .attr("stroke-width", 3)
+                    .attr("stroke","#000");
+                    const rect = this.getBoundingClientRect();
+                    showTooltip(d.id, rect.x + window.scrollX, rect.y + window.scrollY);
+                })
+                .on("mouseout", function(d){
+                    d3.select(this)
+                    .style("cursor", "default")
+                    .attr("stroke-width", 0)
+                    .attr("stroke","none");
+                    hideTooltip();
+                })
 
-//         }
-//     })
-//     let button = document.getElementsByName("bMap")[0];
-//     let input = document.getElementsByName("iMap")[0];
-//     let output = document.getElementsByName("oMap")[0];
-//     let form = document.getElementsByName("scrubberMap")[0]
-//     Scrubber(range, input, output, form, button, 2, {loop: false, autoplay: false, delay:200})
-// }
+        }
+    })
+    let button = document.getElementsByName("bMap")[0];
+    let input = document.getElementsByName("iMap")[0];
+    let output = document.getElementsByName("oMap")[0];
+    let form = document.getElementsByName("scrubberMap")[0]
+    Scrubber(range, input, output, form, button, 2, {loop: false, autoplay: false, delay:200})
+ }
 
 let getTotalOfCases = (data) => {
     return data.length;
@@ -821,9 +821,9 @@ function ready([data, statesById, topo]){
     us = topo;
     aux = data;
     range = getRange();
-    //casesById = dataAt(mapYear.year);
+    casesById = dataAt(mapYear.year);
 
-    //scrubberMap(casesById);
+    scrubberMap(casesById);
     lineChart(lineData);
     beeswarm(data);
     stackedBar(data);
