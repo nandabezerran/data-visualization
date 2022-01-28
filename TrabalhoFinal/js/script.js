@@ -702,7 +702,7 @@ let dataAt = (year) => {
                 return true;
             }
             return false;
-        });
+        });  
         cases.set(id.substr(1), +filtered.length);
     }
     return cases;
@@ -761,7 +761,7 @@ let scrubberMap = (data) => {
                 .attr("fill", d => colorScale(newdata.get(d.id)))
                 .attr("d", path)
                 .on("mouseover", function(d){
-                    d3.select(this)
+                    d3.select(this) 
                     .style("cursor", "pointer")
                     .attr("stroke-width", 3)
                     .attr("stroke","#000");
@@ -783,7 +783,7 @@ let scrubberMap = (data) => {
     let output = document.getElementsByName("oMap")[0];
     let form = document.getElementsByName("scrubberMap")[0]
     Scrubber(range, input, output, form, button, 2, {loop: false, autoplay: false, delay:200})
- }
+}
 
 let getTotalOfCases = (data) => {
     return data.length;
@@ -821,9 +821,9 @@ function ready([data, statesById, topo]){
     us = topo;
     aux = data;
     range = getRange();
-    casesById = dataAt(mapYear.year);
+    //casesById = dataAt(mapYear.year);
 
-    scrubberMap(casesById);
+    //scrubberMap(casesById);
     lineChart(lineData);
     beeswarm(data);
     stackedBar(data);

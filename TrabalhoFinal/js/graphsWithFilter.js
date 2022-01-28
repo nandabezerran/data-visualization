@@ -30,7 +30,7 @@ function statesCallback(data, rateMap){
     d.properties.cases = rateMap.get(d.properties.NAME)
     })
 
-    return data
+    return data   
 }
 
 function datasetCallback(data){
