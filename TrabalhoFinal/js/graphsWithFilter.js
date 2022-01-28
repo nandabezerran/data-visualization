@@ -49,7 +49,7 @@ function datasetCallback(data){
         }else{
             obj["Race"] = "Others";
         }
-        //auxMap.set(r.Id, obj);
+        auxMap.set(r.Id, obj);
     })
     return data
 }
@@ -68,8 +68,8 @@ let svg = d3.select("#pieChart").append("svg")
                 
 Promise.all([statesPromise, dataMapPromise, datasetPromise])
        .then(function([statesR, dataMapR, datasetR]){
-            // dataMap = dataMapCallback(dataMapR);
-            // states = statesCallback(statesR, dataMap);
+            dataMap = dataMapCallback(dataMapR);
+            states = statesCallback(statesR, dataMap);
             dataset = datasetCallback(datasetR);
             let facts = crossfilter(dataset);
             let mapColorScale = d3.scaleQuantize()
@@ -272,7 +272,7 @@ Promise.all([statesPromise, dataMapPromise, datasetPromise])
                         '<b>' + feat.properties.NAME + '</b><br />' + dataMap.get(feat.properties.NAME) + ' accumulated cases'
                         : 'Mouse over a state. You can click to filter other graphics');
             }
-            //info.addTo(map);
+            info.addTo(map);
             //Legend
             let legend= L.control({position: 'bottomright'});
             legend.onAdd = function (map) {
